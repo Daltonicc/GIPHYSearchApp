@@ -11,7 +11,7 @@ class BaseViewController: UIViewController {
 
     let backBarButton: UIBarButtonItem = {
         let barButton = UIBarButtonItem()
-        barButton.image = UIImage(systemName: "arrow.left")
+        barButton.image = UIImage(systemName: "chevron.left")
         barButton.tintColor = .black
         return barButton
     }()
@@ -22,9 +22,6 @@ class BaseViewController: UIViewController {
         navigationItemConfig()
     }
 
-    func setViewConfig() {
-        view.backgroundColor = .white
-    }
-
+    func setViewConfig() {}
     func navigationItemConfig() {}
 }
