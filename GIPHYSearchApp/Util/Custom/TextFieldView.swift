@@ -17,9 +17,14 @@ final class TextFieldView: BaseView {
         textField.addLeftPadding()
         return textField
     }()
+    let buttonView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isUserInteractionEnabled = false
+        return view
+    }()
     let searchButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .systemPurple
         button.tintColor = .white
         button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -42,6 +47,7 @@ final class TextFieldView: BaseView {
         self.backgroundColor = .white
 
         addSubview(textField)
+        addSubview(buttonView)
         addSubview(searchButton)
     }
 
@@ -51,6 +57,11 @@ final class TextFieldView: BaseView {
         textField.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         textField.trailingAnchor.constraint(equalTo: searchButton.leadingAnchor).isActive = true
         textField.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+
+        buttonView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        buttonView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        buttonView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        buttonView.widthAnchor.constraint(equalToConstant: 50).isActive = true
 
         searchButton.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         searchButton.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
