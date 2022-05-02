@@ -16,12 +16,13 @@ class SearchViewController: BaseViewController {
     }
 
     override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        mainView.gradientView.setGradient()
+
+        mainView.gradientConfig()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
     }
 
     override func setViewConfig() {
@@ -36,6 +37,8 @@ class SearchViewController: BaseViewController {
         navigationItem.title = "Search"
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
     }
+
+
 }
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {

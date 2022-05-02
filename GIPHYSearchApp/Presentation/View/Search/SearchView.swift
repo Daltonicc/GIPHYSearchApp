@@ -89,4 +89,16 @@ final class SearchView: BaseView {
         gradientView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         gradientView.heightAnchor.constraint(equalToConstant: 250).isActive = true
     }
+
+    func gradientConfig() {
+
+        gradientView.setGradient(startColor: UIColor(red: 50/255, green: 50/255, blue: 50/255, alpha: 0),
+                                          finishColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.3),
+                                          start: CGPoint(x: 1.0, y: 0.0),
+                                          end: CGPoint(x: 1.0, y: 1.0))
+        textFieldView.buttonView.setGradient(startColor: UIColor(red: 253/255, green: 122/255, blue: 255/255, alpha: 1),
+                                                      finishColor: UIColor(red: 196/255, green: 24/255, blue: 188/255, alpha: 1),
+                                                      start: CGPoint(x: 1.0, y: 0.0),
+                                                      end: CGPoint(x: 0.0, y: 1.0))
+    }
 }
