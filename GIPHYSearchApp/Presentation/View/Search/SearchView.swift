@@ -14,6 +14,11 @@ final class SearchView: BaseView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    let categoryView: CategoryButtonView = {
+        let view = CategoryButtonView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     let searchCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -47,6 +52,7 @@ final class SearchView: BaseView {
     override func setUpView() {
 
         addSubview(textFieldView)
+        addSubview(categoryView)
         addSubview(searchCollectionView)
         addSubview(noResultLabel)
     }
@@ -58,7 +64,12 @@ final class SearchView: BaseView {
         textFieldView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         textFieldView.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
-        searchCollectionView.topAnchor.constraint(equalTo: textFieldView.bottomAnchor).isActive = true
+        categoryView.topAnchor.constraint(equalTo: textFieldView.bottomAnchor, constant: 10).isActive = true
+        categoryView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        categoryView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        categoryView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+
+        searchCollectionView.topAnchor.constraint(equalTo: categoryView.bottomAnchor).isActive = true
         searchCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         searchCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         searchCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
