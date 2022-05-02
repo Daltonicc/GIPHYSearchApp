@@ -9,24 +9,10 @@ import UIKit
 
 final class SearchView: BaseView {
 
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "GIPHY Search"
-        label.font = .boldSystemFont(ofSize: 25)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    let favoriteBarButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem(title: "즐겨찾기", style: .plain, target: nil, action: nil)
-        barButton.tintColor = .black
-        return barButton
-    }()
-    let searchBar: UISearchBar = {
-        let searchBar = UISearchBar()
-        searchBar.placeholder = "검색어를 입력해주세요"
-        searchBar.searchBarStyle = .minimal
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
-        return searchBar
+    let textFieldView: TextFieldView = {
+        let view = TextFieldView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     let searchCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -36,6 +22,7 @@ final class SearchView: BaseView {
         layout.minimumInteritemSpacing = 10
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         layout.scrollDirection = .vertical
+        collectionView.backgroundColor = .black
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -44,6 +31,7 @@ final class SearchView: BaseView {
         label.text = "검색 결과가 없습니다."
         label.font = .systemFont(ofSize: 30)
         label.textColor = .systemGray4
+        label.isHidden = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -58,18 +46,19 @@ final class SearchView: BaseView {
 
     override func setUpView() {
 
-        addSubview(searchBar)
+        addSubview(textFieldView)
         addSubview(searchCollectionView)
         addSubview(noResultLabel)
     }
 
     override func setUpConstraint() {
 
-        searchBar.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
-        searchBar.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        searchBar.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        textFieldView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
+        textFieldView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        textFieldView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        textFieldView.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
-        searchCollectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor).isActive = true
+        searchCollectionView.topAnchor.constraint(equalTo: textFieldView.bottomAnchor).isActive = true
         searchCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         searchCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         searchCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
