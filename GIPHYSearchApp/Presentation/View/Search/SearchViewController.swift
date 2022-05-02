@@ -15,13 +15,16 @@ class SearchViewController: BaseViewController {
         self.view = mainView
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        mainView.gradientView.setGradient()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
 
     override func setViewConfig() {
-        super.setViewConfig()
 
         mainView.searchCollectionView.delegate = self
         mainView.searchCollectionView.dataSource = self
@@ -30,8 +33,8 @@ class SearchViewController: BaseViewController {
 
     override func navigationItemConfig() {
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: mainView.titleLabel)
-        navigationItem.rightBarButtonItem = mainView.favoriteBarButton
+        navigationItem.title = "Search"
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
     }
 }
 

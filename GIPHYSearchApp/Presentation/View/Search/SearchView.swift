@@ -40,6 +40,12 @@ final class SearchView: BaseView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    let gradientView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isUserInteractionEnabled = false
+        return view
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -55,6 +61,7 @@ final class SearchView: BaseView {
         addSubview(categoryView)
         addSubview(searchCollectionView)
         addSubview(noResultLabel)
+        addSubview(gradientView)
     }
 
     override func setUpConstraint() {
@@ -64,7 +71,7 @@ final class SearchView: BaseView {
         textFieldView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         textFieldView.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
-        categoryView.topAnchor.constraint(equalTo: textFieldView.bottomAnchor, constant: 10).isActive = true
+        categoryView.topAnchor.constraint(equalTo: textFieldView.bottomAnchor, constant: 5).isActive = true
         categoryView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         categoryView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         categoryView.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -76,5 +83,10 @@ final class SearchView: BaseView {
 
         noResultLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         noResultLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+
+        gradientView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        gradientView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        gradientView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        gradientView.heightAnchor.constraint(equalToConstant: 250).isActive = true
     }
 }
