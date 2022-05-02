@@ -15,6 +15,9 @@ class HomeTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        searchView.viewModel = SearchViewModel(useCase: SearchUseCase(repository: GIPHYRepository()))
+
+
         self.viewControllers = [
             tabBarConfig(rootViewController: searchView, tabBarImage: UIImage(systemName: "magnifyingglass")!),
             tabBarConfig(rootViewController: favoriteView, tabBarImage: UIImage(systemName: "person")!)
@@ -26,7 +29,6 @@ class HomeTabBarController: UITabBarController {
     }
 
     private func tabBarConfig(rootViewController: UIViewController, tabBarImage: UIImage) -> UINavigationController {
-
         let rootViewController = rootViewController
         let navigationController = UINavigationController(rootViewController: rootViewController)
         navigationController.tabBarItem.image = tabBarImage
