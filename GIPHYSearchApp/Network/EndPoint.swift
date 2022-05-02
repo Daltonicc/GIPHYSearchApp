@@ -19,11 +19,11 @@ extension GIPHYAPI {
     var url: URL {
         switch self {
         case .getGifData:
-            return URL(string: "api.giphy.com/v1/gifs/search")!
+            return URL(string: "https://api.giphy.com/v1/gifs/search")!
         case .getStickerData:
-            return URL(string: "api.giphy.com/v1/stickers/search")!
+            return URL(string: "https://api.giphy.com/v1/stickers/search")!
         case .getTextData:
-            return URL(string: "api.giphy.com/v1/text/search")!
+            return URL(string: "https://api.giphy.com/v1/text/search")!
         }
 
     }
