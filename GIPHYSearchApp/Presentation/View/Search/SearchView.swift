@@ -28,7 +28,7 @@ final class SearchView: BaseView {
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         return searchBar
     }()
-    let imageCollectionView: UICollectionView = {
+    let searchCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         layout.itemSize = CGSize(width: UIScreen.main.bounds.width / 3 - 20, height: UIScreen.main.bounds.width / 3 - 20)
@@ -59,7 +59,7 @@ final class SearchView: BaseView {
     override func setUpView() {
 
         addSubview(searchBar)
-        addSubview(imageCollectionView)
+        addSubview(searchCollectionView)
         addSubview(noResultLabel)
     }
 
@@ -69,10 +69,10 @@ final class SearchView: BaseView {
         searchBar.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         searchBar.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
 
-        imageCollectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor).isActive = true
-        imageCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        imageCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        imageCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        searchCollectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor).isActive = true
+        searchCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        searchCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        searchCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
         noResultLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         noResultLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
