@@ -10,6 +10,7 @@ import UIKit
 class SearchViewController: BaseViewController {
 
     let mainView = SearchView()
+    var viewModel: SearchViewModel?
 
     override func loadView() {
         self.view = mainView
@@ -22,7 +23,7 @@ class SearchViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        bind()
     }
 
     override func setViewConfig() {
@@ -38,20 +39,28 @@ class SearchViewController: BaseViewController {
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
     }
 
+    private func bind() {
+
+        viewModel?.gifData.bind { [weak self] item in
+            guard let self = self else { return }
+            self.mainView.searchCollectionView.reloadData()
+        }
+    }
 
 }
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 30
+        return viewModel?.gifData.value.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifier, for: indexPath) as? SearchCollectionViewCell else { return UICollectionViewCell() }
+        guard let viewModel = viewModel else { return UICollectionViewCell() }
 
+        cell.imageView.backgroundColor = .white
+        cell.cellConfig(item: viewModel.gifData.value[indexPath.row])
         return cell
     }
-
-
 }
