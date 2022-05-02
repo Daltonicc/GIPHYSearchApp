@@ -9,14 +9,14 @@
 /* Begin PBXBuildFile section */
 		6AE8EC2C281F9B8A00D4CDD5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE8EC2B281F9B8A00D4CDD5 /* AppDelegate.swift */; };
 		6AE8EC2E281F9B8A00D4CDD5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE8EC2D281F9B8A00D4CDD5 /* SceneDelegate.swift */; };
-		6AE8EC30281F9B8A00D4CDD5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE8EC2F281F9B8A00D4CDD5 /* ViewController.swift */; };
-		6AE8EC33281F9B8A00D4CDD5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AE8EC31281F9B8A00D4CDD5 /* Main.storyboard */; };
+		6AE8EC30281F9B8A00D4CDD5 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE8EC2F281F9B8A00D4CDD5 /* SearchViewController.swift */; };
 		6AE8EC36281F9B8A00D4CDD5 /* GIPHYSearchApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6AE8EC34281F9B8A00D4CDD5 /* GIPHYSearchApp.xcdatamodeld */; };
 		6AE8EC38281F9B8B00D4CDD5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AE8EC37281F9B8B00D4CDD5 /* Assets.xcassets */; };
 		6AE8EC3B281F9B8B00D4CDD5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AE8EC39281F9B8B00D4CDD5 /* LaunchScreen.storyboard */; };
 		6AE8EC46281F9B8B00D4CDD5 /* GIPHYSearchAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE8EC45281F9B8B00D4CDD5 /* GIPHYSearchAppTests.swift */; };
 		6AE8EC50281F9B8B00D4CDD5 /* GIPHYSearchAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE8EC4F281F9B8B00D4CDD5 /* GIPHYSearchAppUITests.swift */; };
 		6AE8EC52281F9B8B00D4CDD5 /* GIPHYSearchAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE8EC51281F9B8B00D4CDD5 /* GIPHYSearchAppUITestsLaunchTests.swift */; };
+		6AE8EC60281F9BD600D4CDD5 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6AE8EC5F281F9BD600D4CDD5 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,8 +40,7 @@
 		6AE8EC28281F9B8A00D4CDD5 /* GIPHYSearchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GIPHYSearchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AE8EC2B281F9B8A00D4CDD5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6AE8EC2D281F9B8A00D4CDD5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		6AE8EC2F281F9B8A00D4CDD5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		6AE8EC32281F9B8A00D4CDD5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		6AE8EC2F281F9B8A00D4CDD5 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		6AE8EC35281F9B8A00D4CDD5 /* GIPHYSearchApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GIPHYSearchApp.xcdatamodel; sourceTree = "<group>"; };
 		6AE8EC37281F9B8B00D4CDD5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6AE8EC3A281F9B8B00D4CDD5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -58,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AE8EC60281F9BD600D4CDD5 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				6AE8EC2A281F9B8A00D4CDD5 /* GIPHYSearchApp */,
+				6AE8EC6D281F9D1C00D4CDD5 /* Resources */,
 				6AE8EC44281F9B8B00D4CDD5 /* GIPHYSearchAppTests */,
 				6AE8EC4E281F9B8B00D4CDD5 /* GIPHYSearchAppUITests */,
 				6AE8EC29281F9B8A00D4CDD5 /* Products */,
@@ -101,12 +102,11 @@
 		6AE8EC2A281F9B8A00D4CDD5 /* GIPHYSearchApp */ = {
 			isa = PBXGroup;
 			children = (
-				6AE8EC2B281F9B8A00D4CDD5 /* AppDelegate.swift */,
-				6AE8EC2D281F9B8A00D4CDD5 /* SceneDelegate.swift */,
-				6AE8EC2F281F9B8A00D4CDD5 /* ViewController.swift */,
-				6AE8EC31281F9B8A00D4CDD5 /* Main.storyboard */,
-				6AE8EC37281F9B8B00D4CDD5 /* Assets.xcassets */,
-				6AE8EC39281F9B8B00D4CDD5 /* LaunchScreen.storyboard */,
+				6AE8EC6C281F9D0B00D4CDD5 /* Application */,
+				6AE8EC6E281F9D3900D4CDD5 /* Util */,
+				6AE8EC63281F9C8400D4CDD5 /* Data */,
+				6AE8EC62281F9C7D00D4CDD5 /* Domain */,
+				6AE8EC61281F9C7600D4CDD5 /* Presentation */,
 				6AE8EC3C281F9B8B00D4CDD5 /* Info.plist */,
 				6AE8EC34281F9B8A00D4CDD5 /* GIPHYSearchApp.xcdatamodeld */,
 			);
@@ -130,6 +130,181 @@
 			path = GIPHYSearchAppUITests;
 			sourceTree = "<group>";
 		};
+		6AE8EC61281F9C7600D4CDD5 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				6AE8EC65281F9C8F00D4CDD5 /* ViewModel */,
+				6AE8EC64281F9C8A00D4CDD5 /* View */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		6AE8EC62281F9C7D00D4CDD5 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				6AE8EC69281F9CDF00D4CDD5 /* Entity */,
+				6AE8EC68281F9CD300D4CDD5 /* Interfaces */,
+				6AE8EC66281F9C9700D4CDD5 /* UseCase */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		6AE8EC63281F9C8400D4CDD5 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				6AE8EC6A281F9CE600D4CDD5 /* DataMapping */,
+				6AE8EC67281F9CA200D4CDD5 /* Repository */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		6AE8EC64281F9C8A00D4CDD5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6AE8EC76281F9E5300D4CDD5 /* Favorite */,
+				6AE8EC75281F9E4D00D4CDD5 /* Detail */,
+				6AE8EC74281F9E4600D4CDD5 /* Search */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6AE8EC65281F9C8F00D4CDD5 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		6AE8EC66281F9C9700D4CDD5 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		6AE8EC67281F9CA200D4CDD5 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		6AE8EC68281F9CD300D4CDD5 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		6AE8EC69281F9CDF00D4CDD5 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		6AE8EC6A281F9CE600D4CDD5 /* DataMapping */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DataMapping;
+			sourceTree = "<group>";
+		};
+		6AE8EC6B281F9CF000D4CDD5 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		6AE8EC6C281F9D0B00D4CDD5 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				6AE8EC2B281F9B8A00D4CDD5 /* AppDelegate.swift */,
+				6AE8EC2D281F9B8A00D4CDD5 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		6AE8EC6D281F9D1C00D4CDD5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6AE8EC37281F9B8B00D4CDD5 /* Assets.xcassets */,
+				6AE8EC39281F9B8B00D4CDD5 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		6AE8EC6E281F9D3900D4CDD5 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				6AE8EC73281F9DDE00D4CDD5 /* Custom */,
+				6AE8EC72281F9DDA00D4CDD5 /* Base */,
+				6AE8EC71281F9DD200D4CDD5 /* Protocol */,
+				6AE8EC70281F9DC700D4CDD5 /* Extension */,
+				6AE8EC6B281F9CF000D4CDD5 /* Network */,
+				6AE8EC6F281F9D5100D4CDD5 /* Database */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		6AE8EC6F281F9D5100D4CDD5 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		6AE8EC70281F9DC700D4CDD5 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		6AE8EC71281F9DD200D4CDD5 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		6AE8EC72281F9DDA00D4CDD5 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		6AE8EC73281F9DDE00D4CDD5 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		6AE8EC74281F9E4600D4CDD5 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				6AE8EC2F281F9B8A00D4CDD5 /* SearchViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		6AE8EC75281F9E4D00D4CDD5 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		6AE8EC76281F9E5300D4CDD5 /* Favorite */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Favorite;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -146,6 +321,9 @@
 			dependencies = (
 			);
 			name = GIPHYSearchApp;
+			packageProductDependencies = (
+				6AE8EC5F281F9BD600D4CDD5 /* Alamofire */,
+			);
 			productName = GIPHYSearchApp;
 			productReference = 6AE8EC28281F9B8A00D4CDD5 /* GIPHYSearchApp.app */;
 			productType = "com.apple.product-type.application";
@@ -218,6 +396,9 @@
 				Base,
 			);
 			mainGroup = 6AE8EC1F281F9B8A00D4CDD5;
+			packageReferences = (
+				6AE8EC5E281F9BD600D4CDD5 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 6AE8EC29281F9B8A00D4CDD5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -236,7 +417,6 @@
 			files = (
 				6AE8EC3B281F9B8B00D4CDD5 /* LaunchScreen.storyboard in Resources */,
 				6AE8EC38281F9B8B00D4CDD5 /* Assets.xcassets in Resources */,
-				6AE8EC33281F9B8A00D4CDD5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,7 +441,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6AE8EC30281F9B8A00D4CDD5 /* ViewController.swift in Sources */,
+				6AE8EC30281F9B8A00D4CDD5 /* SearchViewController.swift in Sources */,
 				6AE8EC2C281F9B8A00D4CDD5 /* AppDelegate.swift in Sources */,
 				6AE8EC2E281F9B8A00D4CDD5 /* SceneDelegate.swift in Sources */,
 				6AE8EC36281F9B8A00D4CDD5 /* GIPHYSearchApp.xcdatamodeld in Sources */,
@@ -301,14 +481,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		6AE8EC31281F9B8A00D4CDD5 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6AE8EC32281F9B8A00D4CDD5 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		6AE8EC39281F9B8B00D4CDD5 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -370,7 +542,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -424,7 +596,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -446,7 +618,7 @@
 				INFOPLIST_FILE = GIPHYSearchApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -458,7 +630,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -474,7 +646,7 @@
 				INFOPLIST_FILE = GIPHYSearchApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -486,7 +658,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -606,6 +778,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6AE8EC5E281F9BD600D4CDD5 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6AE8EC5F281F9BD600D4CDD5 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6AE8EC5E281F9BD600D4CDD5 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		6AE8EC34281F9B8A00D4CDD5 /* GIPHYSearchApp.xcdatamodeld */ = {
