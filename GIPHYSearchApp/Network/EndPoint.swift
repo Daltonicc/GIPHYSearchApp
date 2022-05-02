@@ -9,24 +9,33 @@ import Foundation
 import Alamofire
 
 enum GIPHYAPI {
-    case getGiphyData(query: String, start: Int, display: Int)
+    case getGifData(query: String, start: Int, display: Int)
+    case getStickerData(query: String, start: Int, display: Int)
+    case getTextData(query: String, start: Int, display: Int)
 }
 
 extension GIPHYAPI {
 
     var url: URL {
-        return URL(string: "api.giphy.com/v1/gifs/search")!
+        switch self {
+        case .getGifData:
+            return URL(string: "api.giphy.com/v1/gifs/search")!
+        case .getStickerData:
+            return URL(string: "api.giphy.com/v1/stickers/search")!
+        case .getTextData:
+            return URL(string: "api.giphy.com/v1/text/search")!
+        }
+
     }
 
     var parameters: [String: String] {
         switch self {
-        case .getGiphyData(let query, let start, let display):
-            return [
-                "api_key": APIKey.apikey,
-                "q": "\(query)",
-                "limit": "\(display)",
-                "offset": "\(start)"
-            ]
+        case .getGifData(let query, let start, let display):
+            return getParameter(query: query, start: start, display: display)
+        case .getStickerData(let query, let start, let display):
+            return getParameter(query: query, start: start, display: display)
+        case .getTextData(let query, let start, let display):
+            return getParameter(query: query, start: start, display: display)
         }
     }
 
@@ -34,32 +43,17 @@ extension GIPHYAPI {
         switch self {
         default:
             return [
-                "Content-Type": "application/x-www-form-urlencoded",
+                "Content-Type": "application/x-www-form-urlencoded"
             ]
         }
     }
-}
 
-final class APIManager {
-
-    static let shared = APIManager()
-
-    private init() {}
-
-    func getMovieData(query: String, start: Int, display: Int, completion: @escaping (Result<MovieData, MovieError>) -> Void) {
-
-        let movieAPI: GIPHYAPI = .getGiphyData(query: query, start: start, display: display)
-
-        AF.request(movieAPI.url, method: .get, parameters: movieAPI.parameters, headers: movieAPI.headers).validate()
-            .responseDecodable(of: ResponseMovieDataDTO.self) { [weak self] response in
-                switch response.result {
-                case .success(let data):
-                    let movieData = data.toEntity()
-                    completion(.success(movieData))
-                case .failure(_):
-                    guard let statusCode = response.response?.statusCode else { return }
-                    guard let error = self?.statusCodeCheck(statusCode: statusCode) else { return }
-                    completion(.failure(error))
-                }
-            }
+    private func getParameter(query: String, start: Int, display: Int) -> [String: String] {
+        return [
+            "api_key": APIKey.apikey,
+            "q": query,
+            "limit": "\(display)",
+            "offset": "\(start)"
+        ]
     }
+}
