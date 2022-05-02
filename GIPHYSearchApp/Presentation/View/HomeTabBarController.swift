@@ -9,21 +9,27 @@ import UIKit
 
 class HomeTabBarController: UITabBarController {
 
+    let searchView = SearchViewController()
+    let favoriteView = FavoriteViewController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.viewControllers = [
+            tabBarConfig(rootViewController: searchView, tabBarImage: UIImage(systemName: "magnifyingglass")!),
+            tabBarConfig(rootViewController: favoriteView, tabBarImage: UIImage(systemName: "person")!)
+        ]
+
+        tabBar.unselectedItemTintColor = .white
+        tabBar.tintColor = .green
+
     }
-    
 
-    /*
-    // MARK: - Navigation
+    private func tabBarConfig(rootViewController: UIViewController, tabBarImage: UIImage) -> UINavigationController {
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        let rootViewController = rootViewController
+        let navigationController = UINavigationController(rootViewController: rootViewController)
+        navigationController.tabBarItem.image = tabBarImage
+        return navigationController
     }
-    */
-
 }
