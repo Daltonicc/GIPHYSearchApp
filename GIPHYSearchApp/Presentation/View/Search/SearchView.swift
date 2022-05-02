@@ -69,12 +69,12 @@ final class SearchView: BaseView {
         textFieldView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
         textFieldView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         textFieldView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        textFieldView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        textFieldView.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
         categoryView.topAnchor.constraint(equalTo: textFieldView.bottomAnchor, constant: 5).isActive = true
         categoryView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         categoryView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        categoryView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        categoryView.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
         searchCollectionView.topAnchor.constraint(equalTo: categoryView.bottomAnchor).isActive = true
         searchCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true

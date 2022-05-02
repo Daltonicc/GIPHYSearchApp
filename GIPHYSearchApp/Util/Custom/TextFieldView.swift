@@ -23,6 +23,9 @@ final class TextFieldView: BaseView {
         button.tintColor = .white
         button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        button.imageEdgeInsets = UIEdgeInsets(top: 5, left: 3, bottom: 5, right: 5)
         return button
     }()
 
@@ -52,6 +55,6 @@ final class TextFieldView: BaseView {
         searchButton.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         searchButton.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         searchButton.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        searchButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        searchButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
     }
 }
