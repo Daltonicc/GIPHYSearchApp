@@ -31,21 +31,24 @@ final class CategoryButtonView: BaseView {
         let button = UIButton()
         button.setTitle("GIFs", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
-        button.layer.cornerRadius = 15
+        button.titleLabel?.font = .boldSystemFont(ofSize: 20)
+        button.layer.cornerRadius = 25
         return button
     }()
     let stickerButton: UIButton = {
         let button = UIButton()
         button.setTitle("Stickers", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
-        button.layer.cornerRadius = 15
+        button.titleLabel?.font = .boldSystemFont(ofSize: 20)
+        button.layer.cornerRadius = 25
         return button
     }()
     let textButton: UIButton = {
         let button = UIButton()
         button.setTitle("Text", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
-        button.layer.cornerRadius = 15
+        button.titleLabel?.font = .boldSystemFont(ofSize: 20)
+        button.layer.cornerRadius = 25
         return button
     }()
 
