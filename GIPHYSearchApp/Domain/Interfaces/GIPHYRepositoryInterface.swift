@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+protocol GIPHYRepositoryInterface {
+    func getGiphyData(style: CategoryStatus,
+                      query: String,
+                      start: Int,
+                      display: Int,
+                      completion: @escaping (Result<GIFData, SearchError>) -> Void)
+}
