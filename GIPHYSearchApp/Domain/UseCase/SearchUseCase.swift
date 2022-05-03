@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+final class SearchUseCase {
+
+    let repository: GIPHYRepositoryInterface
+
+    init(repository: GIPHYRepositoryInterface) {
+        self.repository = repository
+    }
+
+    func getGIFData(style: CategoryStatus, query: String, start: Int, display: Int, completion: @escaping (Result<GIFData, SearchError>) -> Void) {
+        repository.getGiphyData(style: style, query: query, start: start, display: display, completion: completion)
+    }
+}
