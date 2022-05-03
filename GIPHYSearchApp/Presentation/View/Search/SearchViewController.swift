@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import Alamofire
 
 class SearchViewController: BaseViewController {
 
-    let mainView = SearchView()
+    private let mainView = SearchView()
     var viewModel: SearchViewModel?
 
     override func loadView() {
@@ -45,6 +46,7 @@ class SearchViewController: BaseViewController {
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
     }
 
+    // 데이터 바인딩
     private func bind() {
 
         viewModel?.gifData.bind { [weak self] item in
@@ -53,13 +55,43 @@ class SearchViewController: BaseViewController {
         }
     }
 
+    // GIF Requset
     private func requestGIFData() {
         guard let query = mainView.textFieldView.textField.text else { return }
-        viewModel?.requestGIFData(style: mainView.categoryView.status, query: query, completion: { [weak self] error in
+        guard query.count >= 1 else { return }
+        viewModel?.requestGIFData(style: mainView.categoryView.status, query: query, completion: { [weak self] bool, error in
             guard let self = self else { return }
-            guard let error = error else { return }
-            self.showToast(vc: self, message: error)
+            if let error = error {
+                self.showToast(vc: self, message: error)
+            }
+            self.mainView.noResultLabel.isHidden = bool
         })
+    }
+
+    // Pagination
+    private func requestNextPageData() {
+        guard let query = mainView.textFieldView.textField.text else { return }
+        guard query.count >= 1 else { return }
+        viewModel?.requestNextGIFData(style: mainView.categoryView.status, query: query, completion: { [weak self] error in
+            guard let self = self else { return }
+            if let error = error {
+                self.showToast(vc: self, message: error)
+            }
+        })
+    }
+
+    private func showDetailView(row: Int) {
+        let vc = DetailViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+// TextField Logic
+extension SearchViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        requestGIFData()
+        textField.resignFirstResponder()
+        return true
     }
 
     @objc private func searchButtonClicked() {
@@ -68,14 +100,7 @@ class SearchViewController: BaseViewController {
     }
 }
 
-extension SearchViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        requestGIFData()
-        textField.resignFirstResponder()
-        return true
-    }
-}
-
+// CategoryButtonDelegate - 카테고리 바뀌면 API 호출
 extension SearchViewController: CategoryButtonDelegate {
     func didTapCategoryButton() {
         requestGIFData()
@@ -91,6 +116,15 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifier, for: indexPath) as? SearchCollectionViewCell else { return UICollectionViewCell() }
         guard let viewModel = viewModel else { return UICollectionViewCell() }
         cell.cellConfig(item: viewModel.gifData.value[indexPath.row])
+
+        // Last Element Check
+        if indexPath.row == viewModel.gifData.value.count - 1 {
+            requestNextPageData()
+        }
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        showDetailView(row: indexPath.row)
     }
 }
