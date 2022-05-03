@@ -11,13 +11,16 @@ final class SearchCollectionViewCell: UICollectionViewCell {
 
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "star")
+        imageView.backgroundColor = .black
+        imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     let indicatorView: UIActivityIndicatorView = {
         let indicatorView = UIActivityIndicatorView()
         indicatorView.hidesWhenStopped = true
+        indicatorView.color = .white
+        indicatorView.backgroundColor = .black
         indicatorView.translatesAutoresizingMaskIntoConstraints = false
         return indicatorView
     }()
@@ -51,7 +54,22 @@ final class SearchCollectionViewCell: UICollectionViewCell {
     }
 
     func cellConfig(item: GIFItem) {
+        indiatorAction(bool: true)
         let gifURL = item.images.preview.url
-        imageView.setImageUrl(gifURL)
+        DispatchQueue.main.async {
+            self.imageView.image = UIImage.gifImageWithURL(gifURL)
+//            self.imageView.setImageUrl(gifURL)
+            self.indiatorAction(bool: false)
+        }
+    }
+
+    private func indiatorAction(bool: Bool) {
+        if bool {
+            indicatorView.isHidden = false
+            indicatorView.startAnimating()
+        } else {
+            indicatorView.isHidden = true
+            indicatorView.stopAnimating()
+        }
     }
 }
