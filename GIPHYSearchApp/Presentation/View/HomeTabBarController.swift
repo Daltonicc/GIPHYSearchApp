@@ -16,16 +16,13 @@ class HomeTabBarController: UITabBarController {
         super.viewDidLoad()
 
         searchView.viewModel = SearchViewModel(useCase: SearchUseCase(repository: GIPHYRepository()))
-
-
+        
         self.viewControllers = [
             tabBarConfig(rootViewController: searchView, tabBarImage: UIImage(systemName: "magnifyingglass")!),
             tabBarConfig(rootViewController: favoriteView, tabBarImage: UIImage(systemName: "person")!)
         ]
-
         tabBar.unselectedItemTintColor = .white
         tabBar.tintColor = .green
-
     }
 
     private func tabBarConfig(rootViewController: UIViewController, tabBarImage: UIImage) -> UINavigationController {
