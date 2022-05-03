@@ -8,11 +8,20 @@
 import Foundation
 import Alamofire
 
-final class GIPHYRepository {
+final class GIPHYRepository: GIPHYRepositoryInterface {
 
-    func getGiphyData(query: String, start: Int, display: Int, completion: @escaping (Result<GIFData, SearchError>) -> Void) {
+    func getGiphyData(style: CategoryStatus, query: String, start: Int, display: Int, completion: @escaping (Result<GIFData, SearchError>) -> Void) {
 
-        let giphyAPI: GIPHYAPI = .getGifData(query: query, start: start, display: display)
+        var giphyAPI: GIPHYAPI = .getGifData(query: query, start: start, display: display)
+
+        switch style {
+        case .gif:
+            giphyAPI = .getGifData(query: query, start: start, display: display)
+        case .sticker:
+            giphyAPI = .getStickerData(query: query, start: start, display: display)
+        case .text:
+            giphyAPI = .getTextData(query: query, start: start, display: display)
+        }
 
         AF.request(giphyAPI.url, method: .get, parameters: giphyAPI.parameters, headers: giphyAPI.headers).validate()
             .responseDecodable(of: GIFSearchResponseDTO.self) { response in
