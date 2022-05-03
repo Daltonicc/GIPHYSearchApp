@@ -16,7 +16,7 @@ enum SearchError: Int, Error {
 }
 
 extension SearchError {
-    private var errorDescription: String {
+    var errorDescription: String {
         switch self {
         case .badRequest: return "잘못된 요청입니다"
         case .forbidden: return "권한이 없습니다"
