@@ -20,8 +20,6 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-
-
 extension UIImage {
 
     public class func gifImageWithData(_ data: Data) -> UIImage? {
@@ -34,6 +32,15 @@ extension UIImage {
     }
 
     public class func gifImageWithURL(_ gifUrl:String) -> UIImage? {
+
+        // 캐시에 사용될 Key 값
+        let cacheKey = NSString(string: gifUrl)
+
+        // 해당 Key 에 캐시이미지가 저장되어 있으면 이미지를 사용
+        if let cachedImage = ImageCacheManager.shared.object(forKey: cacheKey) {
+            return cachedImage
+        }
+
         guard let bundleURL:URL = URL(string: gifUrl)
             else {
                 print("image named \"\(gifUrl)\" doesn't exist")
@@ -44,6 +51,8 @@ extension UIImage {
             return nil
         }
 
+        // 다운로드된 이미지를 캐시에 저장
+        ImageCacheManager.shared.setObject(gifImageWithData(imageData)!, forKey: cacheKey)
         return gifImageWithData(imageData)
     }
 
