@@ -8,13 +8,11 @@
 import UIKit
 
 extension UIView {
-    func setGradient(startColor: UIColor, finishColor: UIColor, start: CGPoint, end: CGPoint) {
-        let gradient: CAGradientLayer = CAGradientLayer()
+    func setGradient(gradient: CAGradientLayer, startColor: UIColor, finishColor: UIColor, start: CGPoint, end: CGPoint) {
         gradient.colors = [startColor.cgColor, finishColor.cgColor]
         gradient.locations = [0.0 , 1.0]
         gradient.startPoint = start
         gradient.endPoint = end
-        gradient.frame = bounds
         layer.addSublayer(gradient)
     }
 }
