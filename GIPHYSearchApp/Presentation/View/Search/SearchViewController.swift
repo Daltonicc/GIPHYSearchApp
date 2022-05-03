@@ -89,6 +89,7 @@ class SearchViewController: BaseViewController {
         case .text: vc.title = "Text"
         }
         vc.item = item
+        vc.viewModel = DetailViewModel()
         navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -123,6 +124,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifier, for: indexPath) as? SearchCollectionViewCell else { return UICollectionViewCell() }
         guard let viewModel = viewModel else { return UICollectionViewCell() }
         cell.cellConfig(item: viewModel.gifData.value[indexPath.row])
+
         // Last Element Check
         if indexPath.row == viewModel.gifData.value.count - 1 {
             requestNextPageData()
