@@ -7,19 +7,17 @@
 
 import UIKit
 
+enum CategoryStatus {
+    case gif
+    case sticker
+    case text
+}
+
+protocol CategoryButtonDelegate: AnyObject {
+    func didTapCategoryButton()
+}
+
 final class CategoryButtonView: BaseView {
-
-    enum CategoryStatus {
-        case gif
-        case sticker
-        case text
-    }
-
-    var status: CategoryStatus = .gif {
-        didSet {
-            statusConfig()
-        }
-    }
 
     let categoryStackView: UIStackView = {
         let stackView = UIStackView()
@@ -50,6 +48,14 @@ final class CategoryButtonView: BaseView {
         button.layer.cornerRadius = 15
         return button
     }()
+
+    var status: CategoryStatus = .gif {
+        didSet {
+            statusConfig()
+        }
+    }
+
+    weak var delegate: CategoryButtonDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -99,13 +105,16 @@ final class CategoryButtonView: BaseView {
 
     @objc private func gifButtonTap() {
         status = .gif
+        delegate?.didTapCategoryButton()
     }
 
     @objc private func stickerButtonTap() {
         status = .sticker
+        delegate?.didTapCategoryButton()
     }
 
     @objc private func textButtonTap() {
         status = .text
+        delegate?.didTapCategoryButton()
     }
 }
