@@ -12,7 +12,7 @@ class BaseViewController: UIViewController {
     let backBarButton: UIBarButtonItem = {
         let barButton = UIBarButtonItem()
         barButton.image = UIImage(systemName: "chevron.left")
-        barButton.tintColor = .black
+        barButton.tintColor = .white
         return barButton
     }()
 
@@ -20,8 +20,15 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
         setViewConfig()
         navigationItemConfig()
+
+        backBarButton.target = self
+        backBarButton.action = #selector(backButtonClicked)
     }
 
     func setViewConfig() {}
     func navigationItemConfig() {}
+
+    @objc func backButtonClicked() {
+        navigationController?.popViewController(animated: true)
+    }
 }
