@@ -33,8 +33,8 @@ final class SearchView: BaseView {
     }()
     let noResultLabel: UILabel = {
         let label = UILabel()
-        label.text = "검색 결과가 없습니다."
-        label.font = .systemFont(ofSize: 30)
+        label.text = "No Datas Found"
+        label.font = .boldSystemFont(ofSize: 30)
         label.textColor = .systemGray4
         label.isHidden = true
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -47,12 +47,17 @@ final class SearchView: BaseView {
         return view
     }()
 
+    private var viewGradientLayer = CAGradientLayer()
+    private var buttonGradientLayer = CAGradientLayer()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
+        gradientConfig()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        gradientConfig()
     }
 
     override func setUpView() {
@@ -76,7 +81,7 @@ final class SearchView: BaseView {
         categoryView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         categoryView.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
-        searchCollectionView.topAnchor.constraint(equalTo: categoryView.bottomAnchor).isActive = true
+        searchCollectionView.topAnchor.constraint(equalTo: categoryView.bottomAnchor, constant: 5).isActive = true
         searchCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         searchCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         searchCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
@@ -90,15 +95,22 @@ final class SearchView: BaseView {
         gradientView.heightAnchor.constraint(equalToConstant: 250).isActive = true
     }
 
-    func gradientConfig() {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        viewGradientLayer.frame = gradientView.bounds
+        buttonGradientLayer.frame = textFieldView.searchButton.bounds
+    }
 
-        gradientView.setGradient(startColor: UIColor(red: 50/255, green: 50/255, blue: 50/255, alpha: 0),
-                                          finishColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.3),
-                                          start: CGPoint(x: 1.0, y: 0.0),
-                                          end: CGPoint(x: 1.0, y: 1.0))
-        textFieldView.buttonView.setGradient(startColor: UIColor(red: 253/255, green: 122/255, blue: 255/255, alpha: 1),
-                                                      finishColor: UIColor(red: 196/255, green: 24/255, blue: 188/255, alpha: 1),
-                                                      start: CGPoint(x: 1.0, y: 0.0),
-                                                      end: CGPoint(x: 0.0, y: 1.0))
+    func gradientConfig() {
+        gradientView.setGradient(gradient: viewGradientLayer,
+                                 startColor: UIColor(red: 100/255, green: 100/255, blue: 50/255, alpha: 0),
+                                 finishColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1),
+                                 start: CGPoint(x: 1.0, y: 0.0),
+                                 end: CGPoint(x: 1.0, y: 1.0))
+        textFieldView.buttonView.setGradient(gradient: buttonGradientLayer,
+                                             startColor: UIColor(red: 253/255, green: 122/255, blue: 255/255, alpha: 1),
+                                             finishColor: UIColor(red: 196/255, green: 24/255, blue: 188/255, alpha: 1),
+                                             start: CGPoint(x: 1.0, y: 0.0),
+                                             end: CGPoint(x: 0.0, y: 1.0))
     }
 }

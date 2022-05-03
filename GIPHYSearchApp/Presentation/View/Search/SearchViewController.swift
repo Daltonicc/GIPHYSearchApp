@@ -16,12 +16,7 @@ class SearchViewController: BaseViewController {
     override func loadView() {
         self.view = mainView
     }
-
-    override func viewDidLayoutSubviews() {
-
-        mainView.gradientConfig()
-    }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
@@ -49,10 +44,15 @@ class SearchViewController: BaseViewController {
     // 데이터 바인딩
     private func bind() {
 
-        viewModel?.gifData.bind { [weak self] item in
+        viewModel?.gifData.bind({ [weak self] item in
             guard let self = self else { return }
             self.mainView.searchCollectionView.reloadData()
-        }
+        })
+
+        viewModel?.navigationTitle.bind({ [weak self] title in
+            guard let self = self else { return }
+            self.navigationItem.title = title
+        })
     }
 
     // GIF Requset
