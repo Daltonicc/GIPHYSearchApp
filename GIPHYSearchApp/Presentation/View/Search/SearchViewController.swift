@@ -30,7 +30,11 @@ class SearchViewController: BaseViewController {
 
         mainView.searchCollectionView.delegate = self
         mainView.searchCollectionView.dataSource = self
+        mainView.searchCollectionView.keyboardDismissMode = .onDrag
         mainView.searchCollectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
+
+        mainView.textFieldView.textField.delegate = self
+        mainView.textFieldView.searchButton.addTarget(self, action: #selector(searchButtonClicked), for: .touchUpInside)
     }
 
     override func navigationItemConfig() {
@@ -47,10 +51,30 @@ class SearchViewController: BaseViewController {
         }
     }
 
+    private func requestGIFData() {
+        guard let query = mainView.textFieldView.textField.text else { return }
+        viewModel?.requestGIFData(query: query, completion: { [weak self] error in
+            guard let self = self else { return }
+            guard let error = error else { return }
+            self.showToast(vc: self, message: error)
+        })
+    }
+
+    @objc private func searchButtonClicked() {
+        requestGIFData()
+        mainView.textFieldView.textField.resignFirstResponder()
+    }
+}
+
+extension SearchViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        requestGIFData()
+        textField.resignFirstResponder()
+        return true
+    }
 }
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel?.gifData.value.count ?? 0
     }
