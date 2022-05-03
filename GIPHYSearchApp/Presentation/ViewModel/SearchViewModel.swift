@@ -10,7 +10,7 @@ import Foundation
 protocol SearchViewModelProtocol {
 
     // Input
-    func requestGIFData(query: String, completion: @escaping (String?) -> Void)
+    func requestGIFData(style: CategoryStatus, query: String, completion: @escaping (String?) -> Void)
 
     // Output
 }
@@ -30,9 +30,9 @@ final class SearchViewModel: SearchViewModelProtocol {
         self.useCase = useCase
     }
 
-    func requestGIFData(query: String, completion: @escaping (String?) -> Void) {
+    func requestGIFData(style: CategoryStatus, query: String, completion: @escaping (String?) -> Void) {
 
-        useCase.getGIFData(query: query, start: start, display: display) { [weak self] result in
+        useCase.getGIFData(style: style, query: query, start: start, display: display) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let data):
@@ -50,6 +50,7 @@ final class SearchViewModel: SearchViewModelProtocol {
 extension SearchViewModel {
 
     private func getImageHeightList() {
+        heightList.removeAll()
         for i in gifData.value {
             heightList.append(Int(i.images.original.height) ?? 0)
         }
