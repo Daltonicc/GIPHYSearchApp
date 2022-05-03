@@ -9,6 +9,7 @@ import Foundation
 
 protocol SearchViewModelProtocol {
     func requestGIFData(style: CategoryStatus, query: String, completion: @escaping (Bool, String?) -> Void)
+    func requestNextGIFData(style: CategoryStatus, query: String, completion: @escaping (String?) -> Void)
 }
 
 final class SearchViewModel: SearchViewModelProtocol {

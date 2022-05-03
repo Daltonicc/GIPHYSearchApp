@@ -9,6 +9,7 @@ import Foundation
 
 protocol DetailViewModelProtocol {
     func pressFavoriteButton(item: GIFItem)
+    func checkDatabase(item: GIFItem) -> Bool
 }
 
 final class DetailViewModel: DetailViewModelProtocol {
