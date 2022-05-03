@@ -19,6 +19,7 @@ final class SearchViewModel: SearchViewModelProtocol {
     private var start = 0
     private var display = 20
 
+    var navigationTitle: Observable<String> = Observable("Search")
     var gifData: Observable<[GIFItem]> = Observable([])
     var heightList: [Int] = []
 
@@ -33,6 +34,7 @@ final class SearchViewModel: SearchViewModelProtocol {
             switch result {
             case .success(let data):
                 self.heightList.removeAll()
+                self.navigationTitle.value = query
                 self.total = data.pagination.total
                 self.gifData.value = data.item
                 self.getImageHeightList()

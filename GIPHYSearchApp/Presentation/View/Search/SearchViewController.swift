@@ -80,8 +80,15 @@ class SearchViewController: BaseViewController {
         })
     }
 
-    private func showDetailView(row: Int) {
+    // 디테일 뷰 이동
+    private func showDetailView(item: GIFItem) {
         let vc = DetailViewController()
+        switch mainView.categoryView.status {
+        case .gif: vc.title = "GIF"
+        case .sticker: vc.title = "Sticker"
+        case .text: vc.title = "Text"
+        }
+        vc.item = item
         navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -116,7 +123,6 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifier, for: indexPath) as? SearchCollectionViewCell else { return UICollectionViewCell() }
         guard let viewModel = viewModel else { return UICollectionViewCell() }
         cell.cellConfig(item: viewModel.gifData.value[indexPath.row])
-
         // Last Element Check
         if indexPath.row == viewModel.gifData.value.count - 1 {
             requestNextPageData()
@@ -125,6 +131,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        showDetailView(row: indexPath.row)
+        guard let viewModel = viewModel else { return }
+        showDetailView(item: viewModel.gifData.value[indexPath.row])
     }
 }
