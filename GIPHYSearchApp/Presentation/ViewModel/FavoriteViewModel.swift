@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+protocol FavoriteViewModelProtocol {
+    func fetchFavoriteGIFItemList()
+}
+
+final class FavoriteViewModel: FavoriteViewModelProtocol {
+
+    var gifFavoriteItemList: Observable<[GIFFavoriteItem]> = Observable([])
+
+    func fetchFavoriteGIFItemList() {
+        gifFavoriteItemList.value = CoreDataManager.shared.fetchData(request: GIFFavoriteItem.fetchRequest())
+    }
+}
