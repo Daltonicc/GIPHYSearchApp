@@ -14,6 +14,7 @@ final class TextFieldView: BaseView {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Search GIPHY"
         textField.borderStyle = .none
+        textField.textColor = .black
         textField.addLeftPadding()
         return textField
     }()

@@ -49,7 +49,6 @@ final class FavoriteViewController: BaseViewController {
     private func getFavoriteGIFItem() {
         viewModel?.requestFavoriteGIFItemList(completion: { [weak self] bool in
             guard let self = self else { return }
-            print(bool)
             self.mainView.noResultLabel.isHidden = bool
         })
     }
