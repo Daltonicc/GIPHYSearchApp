@@ -16,11 +16,9 @@ GIPHY 검색 API를 활용한 iOS 어플리케이션.
   + 카테고리별(GIFs, Stickers, Text) GIF 검색 기능
   + 페이지네이션
   + 액티비티 인디케이터
-
 * 디테일 뷰
   + 즐겨찾기 추가/제거
   + 액티비티 인디케이터
-
 * 즐겨찾기 뷰
   + 즐겨찾기 목록 관리
   + 즐겨찾기 데이터 제거
@@ -34,18 +32,23 @@ GIPHY 검색 API를 활용한 iOS 어플리케이션.
     UIKit, AutoLayout, CoreData
     Alamofire
 
-### Architecture
-
-* #### Clean Architecture
-
 ### Issue
 
-#### 1. 
+#### 1. Gradient 이슈
+
+#### 2. 스크롤 딜레이 이슈
+
+#### 3. 좋아요 로직
+*
 
 ### Reflection
 
-#### 1. 
+#### 1. Clean Architecture 적용
 
+#### 2. 비동기 프로그래밍
+
+#### 3. 프로토콜
+  
 *****
 
 ## ScreenShot
