@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum CategoryStatus {
+enum CategoryStatus: Int {
     case gif
     case sticker
     case text
@@ -33,6 +33,7 @@ final class CategoryButtonView: BaseView {
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
         button.layer.cornerRadius = 25
+        button.tag = 0
         return button
     }()
     let stickerButton: UIButton = {
@@ -41,6 +42,7 @@ final class CategoryButtonView: BaseView {
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
         button.layer.cornerRadius = 25
+        button.tag = 1
         return button
     }()
     let textButton: UIButton = {
@@ -49,6 +51,7 @@ final class CategoryButtonView: BaseView {
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
         button.layer.cornerRadius = 25
+        button.tag = 2
         return button
     }()
 
@@ -76,9 +79,9 @@ final class CategoryButtonView: BaseView {
         categoryStackView.addArrangedSubview(stickerButton)
         categoryStackView.addArrangedSubview(textButton)
 
-        gifButton.addTarget(self, action: #selector(gifButtonTap), for: .touchUpInside)
-        stickerButton.addTarget(self, action: #selector(stickerButtonTap), for: .touchUpInside)
-        textButton.addTarget(self, action: #selector(textButtonTap), for: .touchUpInside)
+        gifButton.addTarget(self, action: #selector(buttonTap(sender:)), for: .touchUpInside)
+        stickerButton.addTarget(self, action: #selector(buttonTap(sender:)), for: .touchUpInside)
+        textButton.addTarget(self, action: #selector(buttonTap(sender:)), for: .touchUpInside)
     }
 
     override func setUpConstraint() {
@@ -106,18 +109,8 @@ final class CategoryButtonView: BaseView {
         }
     }
 
-    @objc private func gifButtonTap() {
-        status = .gif
-        delegate?.didTapCategoryButton()
-    }
-
-    @objc private func stickerButtonTap() {
-        status = .sticker
-        delegate?.didTapCategoryButton()
-    }
-
-    @objc private func textButtonTap() {
-        status = .text
+    @objc private func buttonTap(sender: UIButton) {
+        status = CategoryStatus(rawValue: sender.tag) ?? .gif
         delegate?.didTapCategoryButton()
     }
 }
