@@ -79,7 +79,6 @@ override func layoutSubviews() {
     super.layoutSubviews()
 
     viewGradientLayer.frame = gradientView.bounds
-    buttonGradientLayer.frame = textFieldView.searchButton.bounds
 }
 
 func gradientConfig() {
@@ -89,11 +88,6 @@ func gradientConfig() {
                              finishColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1),
                              start: CGPoint(x: 1.0, y: 0.0),
                              end: CGPoint(x: 1.0, y: 1.0))
-    textFieldView.buttonView.setGradient(gradient: buttonGradientLayer,
-                                         startColor: UIColor(red: 253/255, green: 122/255, blue: 255/255, alpha: 1),
-                                         finishColor: UIColor(red: 196/255, green: 24/255, blue: 188/255, alpha: 1),
-                                         start: CGPoint(x: 1.0, y: 0.0),
-                                         end: CGPoint(x: 0.0, y: 1.0))
 }
 
 ```
