@@ -22,23 +22,21 @@ final class SearchViewModel: SearchViewModelProtocol {
 
     var navigationTitle: Observable<String> = Observable("Search")
     var gifData: Observable<[GIFItem]> = Observable([])
-    var heightList: [Int] = []
 
     init(useCase: SearchUseCase) {
         self.useCase = useCase
     }
 
+    // 검색 요청 로직
     func requestGIFData(style: CategoryStatus, query: String, completion: @escaping (Bool, String?) -> Void) {
         start = 0
         useCase.getGIFData(style: style, query: query, start: start, display: display) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let data):
-                self.heightList.removeAll()
                 self.navigationTitle.value = query
                 self.total = data.pagination.total
                 self.gifData.value = data.item
-                self.getImageHeightList()
                 completion(self.noResultCheck(), nil)
             case .failure(let error):
                 completion(false, error.errorDescription)
@@ -46,6 +44,7 @@ final class SearchViewModel: SearchViewModelProtocol {
         }
     }
 
+    // 다음 페이지 검색 요청 로직
     func requestNextGIFData(style: CategoryStatus, query: String, completion: @escaping (String?) -> Void) {
         start += display
         guard start + display <= total || start < total else { return }
@@ -54,7 +53,6 @@ final class SearchViewModel: SearchViewModelProtocol {
             switch result {
             case .success(let data):
                 self.appendData(data: data.item)
-                self.getImageHeightList()
                 completion(nil)
             case .failure(let error):
                 completion(error.errorDescription)
@@ -64,12 +62,6 @@ final class SearchViewModel: SearchViewModelProtocol {
 }
 
 extension SearchViewModel {
-
-    private func getImageHeightList() {
-        for i in gifData.value {
-            heightList.append(Int(i.images.original.height) ?? 0)
-        }
-    }
 
     private func noResultCheck() -> Bool {
         if gifData.value.count == 0 {
