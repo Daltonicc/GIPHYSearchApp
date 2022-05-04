@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SearchCollectionViewCell: UICollectionViewCell {
+final class ContentCollectionViewCell: UICollectionViewCell {
 
     let cellView: ContentGIFView = {
         let view = ContentGIFView()
