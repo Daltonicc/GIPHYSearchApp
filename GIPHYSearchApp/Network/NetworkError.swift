@@ -13,6 +13,7 @@ enum SearchError: Int, Error {
     case notFoundData = 404
     case tooLongQuery = 414
     case tooManyRequest = 429
+    case noNetwork = 500
 }
 
 extension SearchError {
@@ -23,6 +24,7 @@ extension SearchError {
         case .notFoundData: return "데이터를 찾을 수 없습니다"
         case .tooLongQuery: return "50글자 이하로 작성해주세요"
         case .tooManyRequest: return "잠시 후 다시 시도해주세요"
+        case .noNetwork: return "네트워크 연결을 확인해주세요"
         }
     }
 }

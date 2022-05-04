@@ -30,8 +30,11 @@ final class GIPHYRepository: GIPHYRepositoryInterface {
                     let gifData = data.toEntity()
                     completion(.success(gifData))
                 case .failure(_):
-                    guard let statusCode = response.response?.statusCode else { return }
-                    completion(.failure(SearchError(rawValue: statusCode) ?? .badRequest))
+                    if let statusCode = response.response?.statusCode {
+                        completion(.failure(SearchError(rawValue: statusCode) ?? .badRequest))
+                    } else {
+                        completion(.failure(SearchError(rawValue: 500) ?? .noNetwork))
+                    }
                 }
             }
     }
