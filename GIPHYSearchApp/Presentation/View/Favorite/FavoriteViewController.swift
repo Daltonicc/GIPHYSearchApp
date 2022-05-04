@@ -16,10 +16,13 @@ final class FavoriteViewController: BaseViewController {
         self.view = mainView
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        getFavoriteGIFItem()
+        bind()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        bind()
-        getFavoriteGIFItem()
     }
 
     override func setViewConfig() {
@@ -43,15 +46,19 @@ final class FavoriteViewController: BaseViewController {
         })
     }
 
-    private func showDetailView(item: GIFItem) {
-        let vc = DetailViewController()
-        vc.item = item
-        vc.viewModel = DetailViewModel()
-        navigationController?.pushViewController(vc, animated: true)
+    private func getFavoriteGIFItem() {
+        viewModel?.fetchFavoriteGIFItemList(completion: { [weak self] bool in
+            guard let self = self else { return }
+            print(bool)
+            self.mainView.noResultLabel.isHidden = bool
+        })
     }
 
-    private func getFavoriteGIFItem() {
-        viewModel?.fetchFavoriteGIFItemList()
+    private func showDetailView(favoriteItem: GIFFavoriteItem) {
+        let vc = DetailViewController()
+        vc.favoriteItem = favoriteItem
+        vc.viewModel = DetailViewModel()
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -67,5 +74,10 @@ extension FavoriteViewController: UICollectionViewDelegate, UICollectionViewData
         guard let viewModel = viewModel else { return UICollectionViewCell() }
         cell.cellConfig(gifURL: viewModel.gifFavoriteItemList.value[indexPath.row].previewURL ?? "")
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let viewModel = viewModel else { return }
+        showDetailView(favoriteItem: viewModel.gifFavoriteItemList.value[indexPath.row])
     }
 }

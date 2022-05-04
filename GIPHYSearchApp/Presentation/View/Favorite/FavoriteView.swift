@@ -12,14 +12,23 @@ final class FavoriteView: BaseView {
     let favoriteCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width / 2 - 2, height: UIScreen.main.bounds.width / 3 - 20)
-        layout.minimumLineSpacing = 2
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width / 2 - 1, height: UIScreen.main.bounds.width / 3 - 20)
+        layout.minimumLineSpacing = 3
         layout.minimumInteritemSpacing = 2
         layout.sectionInset = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
         layout.scrollDirection = .vertical
         collectionView.backgroundColor = .black
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
+    }()
+    let noResultLabel: UILabel = {
+        let label = UILabel()
+        label.text = "No Favorite Datas Found"
+        label.font = .boldSystemFont(ofSize: 25)
+        label.textColor = .white
+        label.isHidden = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
 
     override init(frame: CGRect) {
@@ -33,6 +42,7 @@ final class FavoriteView: BaseView {
     override func setUpView() {
 
         addSubview(favoriteCollectionView)
+        addSubview(noResultLabel)
     }
 
     override func setUpConstraint() {
@@ -41,5 +51,8 @@ final class FavoriteView: BaseView {
         favoriteCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         favoriteCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         favoriteCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+
+        noResultLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        noResultLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }
 }
