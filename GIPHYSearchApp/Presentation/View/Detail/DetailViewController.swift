@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 final class DetailViewController: BaseViewController {
 
@@ -14,7 +15,16 @@ final class DetailViewController: BaseViewController {
 
     var item: GIFItem?
     var favoriteItem: GIFFavoriteItem?
-    var isFavorite = false
+    var isFavorite = false {
+        didSet {
+            self.mainView.favoriteButton.tintColor = self.isFavorite ? .systemRed : .white
+        }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        contentViewConfigBySearch()
+        contentViewConfigByFavorite()
+    }
 
     override func loadView() {
         self.view = mainView
@@ -23,8 +33,6 @@ final class DetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-        contentViewConfigBySearch()
-        contentViewConfigByFavorite()
     }
 
     override func setViewConfig() {
@@ -41,7 +49,6 @@ final class DetailViewController: BaseViewController {
         mainView.contentView.indicatorAction(bool: true)
         mainView.userImageView.setImageUrl(avatar)
         mainView.usernameLabel.text = name
-        mainView.favoriteButton.tintColor = isFavorite ? .systemRed : .white
         mainView.contentView.heightAnchor.constraint(equalToConstant: CGFloat(height)).isActive = true
 
         DispatchQueue.main.async { [weak self] in
@@ -68,11 +75,20 @@ final class DetailViewController: BaseViewController {
                           gif: favoriteItem.originalURL ?? "",
                           name: favoriteItem.username ?? "",
                           height: favoriteItem.originalHeight ?? "",
-                          isFavorite: favoriteItem.isFavorite)
+                          isFavorite: isFavorite)
     }
 
     private func removeAlert() {
-
+        let alert = UIAlertController(title: "정말 즐겨찾기에서 삭제하시겠습니까?", message: nil, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "취소", style: .cancel) { [weak self] _ in
+            self?.isFavorite.toggle()
+        }
+        let ok = UIAlertAction(title: "삭제", style: .destructive) { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        }
+        alert.addAction(ok)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
     }
 
     @objc private func favoriteButtonClicked() {
@@ -81,7 +97,6 @@ final class DetailViewController: BaseViewController {
             guard let viewModel = self.viewModel else { return }
 
             self.isFavorite.toggle()
-            self.mainView.favoriteButton.tintColor = self.isFavorite ? .systemRed : .white
             viewModel.pressFavoriteButton(item: self.item, favoriteItem: self.favoriteItem) {
                 self.removeAlert()
             }
