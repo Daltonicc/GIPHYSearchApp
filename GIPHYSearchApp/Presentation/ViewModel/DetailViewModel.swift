@@ -8,7 +8,7 @@
 import Foundation
 
 protocol DetailViewModelProtocol {
-    func pressFavoriteButton(item: GIFItem?, favoriteItem: GIFFavoriteItem?, completion: () -> Void)
+    func pressFavoriteButton(item: GIFItem?, favoriteItem: GIFFavoriteItem?, completion: (() -> Void)?)
     func checkDatabase(item: GIFItem) -> Bool
 }
 
@@ -18,7 +18,7 @@ final class DetailViewModel: DetailViewModelProtocol {
         CoreDataManager.shared.fetchData(request: GIFFavoriteItem.fetchRequest())
     }()
 
-    func pressFavoriteButton(item: GIFItem?, favoriteItem: GIFFavoriteItem?, completion: () -> Void) {
+    func pressFavoriteButton(item: GIFItem?, favoriteItem: GIFFavoriteItem?, completion: (() -> Void)?) {
         if let item = item {
             if checkDatabase(item: item) {
                 CoreDataManager.shared.deleteGIFItem(object: gifFavoriteItemList.filter { $0.id == item.id }[0])
@@ -30,7 +30,7 @@ final class DetailViewModel: DetailViewModelProtocol {
         }
         if let favoriteItem = favoriteItem {
             CoreDataManager.shared.deleteGIFItem(object: favoriteItem)
-            completion()
+            completion!()
         }
     }
 

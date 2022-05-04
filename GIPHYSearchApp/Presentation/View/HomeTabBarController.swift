@@ -22,6 +22,7 @@ class HomeTabBarController: UITabBarController {
             tabBarConfig(rootViewController: searchView, tabBarImage: UIImage(systemName: "magnifyingglass")!),
             tabBarConfig(rootViewController: favoriteView, tabBarImage: UIImage(systemName: "person")!)
         ]
+        tabBar.barTintColor = .clear
         tabBar.unselectedItemTintColor = .white
         tabBar.tintColor = .green
     }
@@ -30,6 +31,7 @@ class HomeTabBarController: UITabBarController {
         let rootViewController = rootViewController
         let navigationController = UINavigationController(rootViewController: rootViewController)
         navigationController.tabBarItem.image = tabBarImage
+        navigationController.navigationBar.barTintColor = .black
         return navigationController
     }
 }

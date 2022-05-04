@@ -78,14 +78,12 @@ final class DetailViewController: BaseViewController {
                           isFavorite: isFavorite)
     }
 
-    private func removeAlert() {
+    private func removeAlert(completion: @escaping (UIAlertAction) -> Void) {
         let alert = UIAlertController(title: "정말 즐겨찾기에서 삭제하시겠습니까?", message: nil, preferredStyle: .alert)
         let cancel = UIAlertAction(title: "취소", style: .cancel) { [weak self] _ in
             self?.isFavorite.toggle()
         }
-        let ok = UIAlertAction(title: "삭제", style: .destructive) { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
-        }
+        let ok = UIAlertAction(title: "삭제", style: .destructive, handler: completion)
         alert.addAction(ok)
         alert.addAction(cancel)
         present(alert, animated: true, completion: nil)
@@ -95,10 +93,18 @@ final class DetailViewController: BaseViewController {
         addPressAnimationToButton(scale: 0.85, mainView.favoriteButton) { [weak self] _ in
             guard let self = self else { return }
             guard let viewModel = self.viewModel else { return }
-
             self.isFavorite.toggle()
-            viewModel.pressFavoriteButton(item: self.item, favoriteItem: self.favoriteItem) {
-                self.removeAlert()
+
+            // 즐겨찾기 목록에서 좋아요 해제 로직
+            if let favoriteItem = self.favoriteItem {
+                self.removeAlert { _ in
+                    viewModel.pressFavoriteButton(item: self.item, favoriteItem: favoriteItem) {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }
+            // 검색 목록에서 좋아요 추가/해제 로직
+            } else {
+                viewModel.pressFavoriteButton(item: self.item, favoriteItem: self.favoriteItem, completion: nil)
             }
         }
     }
