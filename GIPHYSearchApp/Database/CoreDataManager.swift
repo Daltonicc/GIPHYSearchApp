@@ -10,7 +10,9 @@ import CoreData
 
 final class CoreDataManager {
 
-    static var shared: CoreDataManager = CoreDataManager()
+    static let shared: CoreDataManager = CoreDataManager()
+
+    private init() {}
 
     var container: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "GIFData")
@@ -36,7 +38,7 @@ final class CoreDataManager {
         }
     }
 
-    @discardableResult func saveGIFItem(item: GIFItem) -> Bool {
+    @discardableResult func saveGIFItem(item: GIFItem?) -> Bool {
 
         let entity = NSEntityDescription.entity(forEntityName: "GIFFavoriteItem", in: self.context)
         if let entity = entity {
