@@ -60,6 +60,8 @@ final class DetailView: BaseView {
         scrollView.addSubview(userImageView)
         scrollView.addSubview(usernameLabel)
         scrollView.addSubview(favoriteButton)
+
+        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: contentView.frame.height + 100)
     }
 
     override func setUpConstraint() {
@@ -70,11 +72,11 @@ final class DetailView: BaseView {
         scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
         contentView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-        contentView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
+        contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10).isActive = true
         contentView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 20).isActive = true
 
         userImageView.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 10).isActive = true
-        userImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
+        userImageView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10).isActive = true
         userImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
         userImageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
