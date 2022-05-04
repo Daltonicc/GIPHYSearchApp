@@ -8,14 +8,15 @@
 import Foundation
 
 protocol FavoriteViewModelProtocol {
-    func fetchFavoriteGIFItemList(completion: (Bool) -> Void)
+    func requestFavoriteGIFItemList(completion: (Bool) -> Void)
 }
 
 final class FavoriteViewModel: FavoriteViewModelProtocol {
 
     var gifFavoriteItemList: Observable<[GIFFavoriteItem]> = Observable([])
 
-    func fetchFavoriteGIFItemList(completion: (Bool) -> Void) {
+    // 즐겨찾기 목록 가져오기
+    func requestFavoriteGIFItemList(completion: (Bool) -> Void) {
         gifFavoriteItemList.value = CoreDataManager.shared.fetchData(request: GIFFavoriteItem.fetchRequest())
         completion(checkEmptyList())
     }

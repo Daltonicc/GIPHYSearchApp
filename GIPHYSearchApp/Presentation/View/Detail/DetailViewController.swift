@@ -57,6 +57,7 @@ final class DetailViewController: BaseViewController {
         }
     }
 
+    // 검색 목록에서 디테일뷰로 갔을 때
     private func contentViewConfigBySearch() {
         guard let item = item else { return }
         guard let viewModel = viewModel else { return }
@@ -68,6 +69,7 @@ final class DetailViewController: BaseViewController {
                           isFavorite: isFavorite)
     }
 
+    // 즐겨찾기 목록에서 디테일뷰로 갔을 때
     private func contentViewConfigByFavorite() {
         guard let favoriteItem = favoriteItem else { return }
         isFavorite = true

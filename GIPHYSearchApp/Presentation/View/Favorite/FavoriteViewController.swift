@@ -38,6 +38,7 @@ final class FavoriteViewController: BaseViewController {
                                                                    .foregroundColor: UIColor.white]
     }
 
+    // 데이터 바인딩
     private func bind() {
         viewModel?.gifFavoriteItemList.bind({ [weak self] item in
             guard let self = self else { return }
@@ -46,7 +47,7 @@ final class FavoriteViewController: BaseViewController {
     }
 
     private func getFavoriteGIFItem() {
-        viewModel?.fetchFavoriteGIFItemList(completion: { [weak self] bool in
+        viewModel?.requestFavoriteGIFItemList(completion: { [weak self] bool in
             guard let self = self else { return }
             print(bool)
             self.mainView.noResultLabel.isHidden = bool

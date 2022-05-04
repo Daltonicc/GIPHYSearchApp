@@ -122,7 +122,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         guard let viewModel = viewModel else { return UICollectionViewCell() }
         cell.cellConfig(gifURL: viewModel.gifData.value[indexPath.row].images.preview.url)
 
-        // Last Element Check
+        // 마지막 데이터인지 확인하고 다음 페이지 요청
         if indexPath.row == viewModel.gifData.value.count - 1 {
             requestNextPageData()
         }

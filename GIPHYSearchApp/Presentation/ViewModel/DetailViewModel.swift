@@ -18,7 +18,9 @@ final class DetailViewModel: DetailViewModelProtocol {
         CoreDataManager.shared.fetchData(request: GIFFavoriteItem.fetchRequest())
     }()
 
+    // 좋아요 버튼 눌렀을 때 로직
     func pressFavoriteButton(item: GIFItem?, favoriteItem: GIFFavoriteItem?, completion: (() -> Void)?) {
+        // 검색 목록에서 눌렀을 때
         if let item = item {
             if checkDatabase(item: item) {
                 CoreDataManager.shared.deleteGIFItem(object: gifFavoriteItemList.filter { $0.id == item.id }[0])
@@ -28,12 +30,14 @@ final class DetailViewModel: DetailViewModelProtocol {
                 gifFavoriteItemList = CoreDataManager.shared.fetchData(request: GIFFavoriteItem.fetchRequest())
             }
         }
+        // 즐겨찾기 목록에서 눌렀을 때
         if let favoriteItem = favoriteItem {
             CoreDataManager.shared.deleteGIFItem(object: favoriteItem)
             completion!()
         }
     }
 
+    // 데이터베이스에 해당 데이터 있는지 확인
     func checkDatabase(item: GIFItem) -> Bool {
         let filterValue = gifFavoriteItemList.filter { $0.id == item.id }
         if filterValue.count >= 1 {
