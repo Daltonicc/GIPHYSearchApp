@@ -50,6 +50,7 @@ final class DetailViewController: BaseViewController {
         mainView.userImageView.setImageUrl(avatar)
         mainView.usernameLabel.text = name
         mainView.contentView.heightAnchor.constraint(equalToConstant: CGFloat(height)).isActive = true
+        mainView.scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: CGFloat(height) + 100)
 
         DispatchQueue.main.async { [weak self] in
             self?.mainView.contentView.imageView.image = UIImage.gifImageWithURL(gif)

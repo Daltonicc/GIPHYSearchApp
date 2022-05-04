@@ -60,8 +60,6 @@ final class DetailView: BaseView {
         scrollView.addSubview(userImageView)
         scrollView.addSubview(usernameLabel)
         scrollView.addSubview(favoriteButton)
-
-        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: contentView.frame.height + 100)
     }
 
     override func setUpConstraint() {
