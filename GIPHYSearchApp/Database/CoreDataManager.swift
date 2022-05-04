@@ -38,7 +38,7 @@ final class CoreDataManager {
         }
     }
 
-    @discardableResult func saveGIFItem(item: GIFItem?) -> Bool {
+    @discardableResult func saveGIFItem(item: GIFItem) -> Bool {
 
         let entity = NSEntityDescription.entity(forEntityName: "GIFFavoriteItem", in: self.context)
         if let entity = entity {

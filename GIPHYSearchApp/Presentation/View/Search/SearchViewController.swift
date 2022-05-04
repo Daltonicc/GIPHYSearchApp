@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Alamofire
 
 class SearchViewController: BaseViewController {
 
@@ -23,11 +22,10 @@ class SearchViewController: BaseViewController {
     }
 
     override func setViewConfig() {
-
         mainView.searchCollectionView.delegate = self
         mainView.searchCollectionView.dataSource = self
         mainView.searchCollectionView.keyboardDismissMode = .onDrag
-        mainView.searchCollectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
+        mainView.searchCollectionView.register(ContentCollectionViewCell.self, forCellWithReuseIdentifier: ContentCollectionViewCell.identifier)
 
         mainView.textFieldView.textField.delegate = self
         mainView.textFieldView.searchButton.addTarget(self, action: #selector(searchButtonClicked), for: .touchUpInside)
@@ -36,14 +34,13 @@ class SearchViewController: BaseViewController {
     }
 
     override func navigationItemConfig() {
-
         navigationItem.title = "Search"
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = [.font: UIFont.boldSystemFont(ofSize: 21),
+                                                                   .foregroundColor: UIColor.white]
     }
 
     // 데이터 바인딩
     private func bind() {
-
         viewModel?.gifData.bind({ [weak self] item in
             guard let self = self else { return }
             self.mainView.searchCollectionView.reloadData()
@@ -121,9 +118,9 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifier, for: indexPath) as? SearchCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContentCollectionViewCell.identifier, for: indexPath) as? ContentCollectionViewCell else { return UICollectionViewCell() }
         guard let viewModel = viewModel else { return UICollectionViewCell() }
-        cell.cellConfig(item: viewModel.gifData.value[indexPath.row])
+        cell.cellConfig(gifURL: viewModel.gifData.value[indexPath.row].images.preview.url)
 
         // Last Element Check
         if indexPath.row == viewModel.gifData.value.count - 1 {

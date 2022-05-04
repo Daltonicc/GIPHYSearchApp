@@ -24,7 +24,6 @@ final class DetailView: BaseView {
     }()
     let userImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .systemPink
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -33,7 +32,6 @@ final class DetailView: BaseView {
         label.font = .boldSystemFont(ofSize: 20)
         label.textColor = .white
         label.textAlignment = .center
-        label.text = "username"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

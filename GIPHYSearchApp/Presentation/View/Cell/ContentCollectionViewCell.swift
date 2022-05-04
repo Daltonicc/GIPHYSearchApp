@@ -37,9 +37,8 @@ final class ContentCollectionViewCell: UICollectionViewCell {
         cellView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
     }
 
-    func cellConfig(item: GIFItem) {
+    func cellConfig(gifURL: String) {
         cellView.indicatorAction(bool: true)
-        let gifURL = item.images.preview.url
         DispatchQueue.main.async { [weak self] in
             self?.cellView.imageView.image = UIImage.gifImageWithURL(gifURL)
             self?.cellView.indicatorAction(bool: false)

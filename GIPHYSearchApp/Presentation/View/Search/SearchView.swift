@@ -35,7 +35,7 @@ final class SearchView: BaseView {
         let label = UILabel()
         label.text = "No Datas Found"
         label.font = .boldSystemFont(ofSize: 30)
-        label.textColor = .systemGray4
+        label.textColor = .white
         label.isHidden = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -97,11 +97,13 @@ final class SearchView: BaseView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+
         viewGradientLayer.frame = gradientView.bounds
         buttonGradientLayer.frame = textFieldView.searchButton.bounds
     }
 
     func gradientConfig() {
+        
         gradientView.setGradient(gradient: viewGradientLayer,
                                  startColor: UIColor(red: 100/255, green: 100/255, blue: 50/255, alpha: 0),
                                  finishColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1),

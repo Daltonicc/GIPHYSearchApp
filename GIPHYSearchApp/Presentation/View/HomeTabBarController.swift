@@ -16,6 +16,7 @@ class HomeTabBarController: UITabBarController {
         super.viewDidLoad()
 
         searchView.viewModel = SearchViewModel(useCase: SearchUseCase(repository: GIPHYRepository()))
+        favoriteView.viewModel = FavoriteViewModel()
         
         self.viewControllers = [
             tabBarConfig(rootViewController: searchView, tabBarImage: UIImage(systemName: "magnifyingglass")!),

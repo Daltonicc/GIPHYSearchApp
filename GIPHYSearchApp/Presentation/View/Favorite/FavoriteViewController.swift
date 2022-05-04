@@ -39,7 +39,6 @@ final class FavoriteViewController: BaseViewController {
     }
 
     private func bind() {
-
         viewModel?.gifFavoriteItemList.bind({ [weak self] item in
             guard let self = self else { return }
             self.mainView.favoriteCollectionView.reloadData()
