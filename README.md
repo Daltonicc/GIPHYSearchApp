@@ -11,6 +11,22 @@ GIPHY 검색 API를 활용한 iOS 어플리케이션.
 - Pagination 구현
 - [개발 공수](https://maze-mozzarella-6e5.notion.site/5e5d19f60849440084d56bad52b37aea)
 
+### Update
+* Image Loading Logic 개선(Multi threading 조치) -> 스크롤 버벅임 현상 개선
+```swift
+func cellConfig(gifURL: String) {
+    cellView.indicatorAction(bool: true)
+    DispatchQueue.global().async { [weak self] in
+        let image = UIImage.gifImageWithURL(gifURL)
+        DispatchQueue.main.async {
+            self?.cellView.imageView.image = image
+            self?.cellView.indicatorAction(bool: false)
+        }
+    }
+}
+```
+
+
 ## Feature
 * 검색 뷰
   + 카테고리별(GIFs, Stickers, Text) GIF 검색 기능
@@ -94,6 +110,7 @@ func gradientConfig() {
 #### 2. 스크롤 딜레이 이슈
 * GIF기능 구현을 위해 공개된 샘플 소스코드를 가져와서 사용했다. 그러나 해당 코드에서는 이미지 캐싱을 따로 해주지 않아서 GIF로딩이 끝난 데이터도 나중에 다시 확인하면 로딩을 또 기다려야했다. 또한 스크롤 버벅임도 상당히 심했다.
 * 문제해결을 위해 해당 소스코드에 이미지 캐싱 기능을 넣어줬다. 이미지 캐싱 덕분에 최초에 새로운 GIF데이터를 호출할 때만 스크롤이 딜레이되고 이후에는 딜레이 현상이 없어졌다.
+* 추가적으로 cellConfig에서 멀티쓰레딩을 해줌으로써 스크롤 딜레이를 개선했다.
 
 ```swift
 public class func gifImageWithURL(_ gifUrl:String) -> UIImage? {
