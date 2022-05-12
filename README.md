@@ -11,7 +11,7 @@ GIPHY 검색 API를 활용한 iOS 어플리케이션.
 - Pagination 구현
 - [개발 공수](https://maze-mozzarella-6e5.notion.site/5e5d19f60849440084d56bad52b37aea)
 
-### Update
+### Update(5/13)
 * Image Loading Logic 개선(Multi threading 조치) -> 스크롤 버벅임 현상 개선
 ```swift
 func cellConfig(gifURL: String) {
