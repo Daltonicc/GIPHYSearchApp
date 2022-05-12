@@ -39,9 +39,12 @@ final class ContentCollectionViewCell: UICollectionViewCell {
 
     func cellConfig(gifURL: String) {
         cellView.indicatorAction(bool: true)
-        DispatchQueue.main.async { [weak self] in
-            self?.cellView.imageView.image = UIImage.gifImageWithURL(gifURL)
-            self?.cellView.indicatorAction(bool: false)
+        DispatchQueue.global().async { [weak self] in
+            let image = UIImage.gifImageWithURL(gifURL)
+            DispatchQueue.main.async {
+                self?.cellView.imageView.image = image
+                self?.cellView.indicatorAction(bool: false)
+            }
         }
     }
 }
