@@ -8,5 +8,5 @@
 import Foundation
 
 final class APIKey {
-    static let apikey = "키 값을 입력해주세요"
+    static let apiKey = "키 값을 입력해주세요"
 }

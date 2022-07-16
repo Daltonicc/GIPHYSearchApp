@@ -50,7 +50,7 @@ extension GIPHYAPI {
 
     private func getParameter(query: String, start: Int, display: Int) -> [String: String] {
         return [
-            "api_key": APIKey.apikey,
+            "api_key": APIKey.apiKey,
             "q": query,
             "limit": "\(display)",
             "offset": "\(start)"
