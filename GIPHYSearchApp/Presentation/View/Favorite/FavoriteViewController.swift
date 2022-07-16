@@ -25,14 +25,14 @@ final class FavoriteViewController: BaseViewController {
         super.viewDidLoad()
     }
 
-    override func setViewConfig() {
+    override func configureView() {
         view.backgroundColor = .black
         mainView.favoriteCollectionView.delegate = self
         mainView.favoriteCollectionView.dataSource = self
         mainView.favoriteCollectionView.register(ContentCollectionViewCell.self, forCellWithReuseIdentifier: ContentCollectionViewCell.identifier)
     }
 
-    override func navigationItemConfig() {
+    override func configureNavigationItem() {
         navigationItem.title = "Favorite"
         navigationController?.navigationBar.titleTextAttributes = [.font: UIFont.boldSystemFont(ofSize: 21),
                                                                    .foregroundColor: UIColor.white]

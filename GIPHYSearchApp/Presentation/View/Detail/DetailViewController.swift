@@ -35,11 +35,11 @@ final class DetailViewController: BaseViewController {
         view.backgroundColor = .black
     }
 
-    override func setViewConfig() {
+    override func configureView() {
         mainView.favoriteButton.addTarget(self, action: #selector(favoriteButtonClicked), for: .touchUpInside)
     }
 
-    override func navigationItemConfig() {
+    override func configureNavigationItem() {
         navigationItem.leftBarButtonItem = backBarButton
     }
 
