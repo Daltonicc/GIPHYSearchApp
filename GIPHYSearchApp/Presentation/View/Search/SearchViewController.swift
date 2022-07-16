@@ -6,22 +6,25 @@
 //
 
 import UIKit
+import Combine
 
 class SearchViewController: BaseViewController {
 
     private let mainView = SearchView()
     var viewModel: SearchViewModel?
 
+    private var cancellables = Set<AnyCancellable>()
+
     override func loadView() {
         self.view = mainView
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
     }
 
-    override func setViewConfig() {
+    override func configureView() {
         mainView.searchCollectionView.delegate = self
         mainView.searchCollectionView.dataSource = self
         mainView.searchCollectionView.keyboardDismissMode = .onDrag
@@ -33,7 +36,7 @@ class SearchViewController: BaseViewController {
         mainView.categoryView.delegate = self
     }
 
-    override func navigationItemConfig() {
+    override func configureNavigationItem() {
         navigationItem.title = "Search"
         navigationController?.navigationBar.titleTextAttributes = [.font: UIFont.boldSystemFont(ofSize: 21),
                                                                    .foregroundColor: UIColor.white]
@@ -41,15 +44,26 @@ class SearchViewController: BaseViewController {
 
     // 데이터 바인딩
     private func bind() {
-        viewModel?.gifData.bind({ [weak self] item in
-            guard let self = self else { return }
-            self.mainView.searchCollectionView.reloadData()
-        })
+        viewModel?.$gifs
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] gifs in
+                self?.mainView.searchCollectionView.reloadData()
+            }
+            .store(in: &cancellables)
 
-        viewModel?.navigationTitle.bind({ [weak self] title in
-            guard let self = self else { return }
-            self.navigationItem.title = title
-        })
+        viewModel?.$navigationTitle
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] title in
+                self?.navigationItem.title = title
+            }
+            .store(in: &cancellables)
+
+        viewModel?.$isEmpty
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isEmpty in
+                self?.mainView.noResultLabel.isHidden = isEmpty
+            }
+            .store(in: &cancellables)
     }
 
     // GIF Requset
@@ -87,6 +101,7 @@ class SearchViewController: BaseViewController {
         }
         vc.item = item
         vc.viewModel = DetailViewModel()
+        
         navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -114,16 +129,16 @@ extension SearchViewController: CategoryButtonDelegate {
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.gifData.value.count ?? 0
+        return viewModel?.gifs.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContentCollectionViewCell.identifier, for: indexPath) as? ContentCollectionViewCell else { return UICollectionViewCell() }
         guard let viewModel = viewModel else { return UICollectionViewCell() }
-        cell.cellConfig(gifURL: viewModel.gifData.value[indexPath.row].images.preview.url)
+        cell.cellConfig(gifURL: viewModel.gifs[indexPath.row].images.preview.url)
 
         // 마지막 데이터인지 확인하고 다음 페이지 요청
-        if indexPath.row == viewModel.gifData.value.count - 1 {
+        if indexPath.row == viewModel.gifs.count - 1 {
             requestNextPageData()
         }
         return cell
@@ -131,6 +146,6 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let viewModel = viewModel else { return }
-        showDetailView(item: viewModel.gifData.value[indexPath.row])
+        showDetailView(item: viewModel.gifs[indexPath.row])
     }
 }

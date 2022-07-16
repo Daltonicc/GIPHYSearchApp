@@ -20,8 +20,9 @@ final class SearchViewModel: SearchViewModelProtocol {
     private var start = 0
     private var display = 20
 
-    var navigationTitle: Observable<String> = Observable("Search")
-    var gifData: Observable<[GIFItem]> = Observable([])
+    @Published var gifs: [GIFItem] = []
+    @Published var navigationTitle = "Search"
+    @Published var isEmpty = true
 
     init(useCase: SearchUseCase) {
         self.useCase = useCase
@@ -34,9 +35,9 @@ final class SearchViewModel: SearchViewModelProtocol {
             guard let self = self else { return }
             switch result {
             case .success(let data):
-                self.navigationTitle.value = query
+                self.navigationTitle = query
                 self.total = data.pagination.total
-                self.gifData.value = data.item
+                self.gifs = data.item
                 completion(self.noResultCheck(), nil)
             case .failure(let error):
                 completion(false, error.errorDescription)
@@ -64,7 +65,7 @@ final class SearchViewModel: SearchViewModelProtocol {
 extension SearchViewModel {
 
     private func noResultCheck() -> Bool {
-        if gifData.value.count == 0 {
+        if gifs.count == 0 {
             return false
         } else {
             return true
@@ -73,7 +74,7 @@ extension SearchViewModel {
 
     private func appendData(data: [GIFItem]) {
         for i in data {
-            self.gifData.value.append(i)
+            self.gifs.append(i)
         }
     }
 }
