@@ -8,26 +8,26 @@
 import Foundation
 
 protocol DetailViewModelProtocol {
-    func pressFavoriteButton(item: GIFItem?, favoriteItem: GIFFavoriteItem?, completion: (() -> Void)?)
-    func checkDatabase(item: GIFItem) -> Bool
+    func didTapFavoriteButton(item: GIFItem?, favoriteItem: GIFFavoriteItem?, completion: (() -> Void)?)
+    func isFavoriteGIFsEmpty(item: GIFItem) -> Bool
 }
 
 final class DetailViewModel: DetailViewModelProtocol {
 
-    private var gifFavoriteItemList: [GIFFavoriteItem] = {
+    private var favoriteGIFs: [GIFFavoriteItem] = {
         CoreDataManager.shared.fetchData(request: GIFFavoriteItem.fetchRequest())
     }()
 
     // 좋아요 버튼 눌렀을 때 로직
-    func pressFavoriteButton(item: GIFItem?, favoriteItem: GIFFavoriteItem?, completion: (() -> Void)?) {
+    func didTapFavoriteButton(item: GIFItem?, favoriteItem: GIFFavoriteItem?, completion: (() -> Void)?) {
         // 검색 목록에서 눌렀을 때
         if let item = item {
-            if checkDatabase(item: item) {
-                CoreDataManager.shared.deleteGIFItem(object: gifFavoriteItemList.filter { $0.id == item.id }[0])
-                gifFavoriteItemList = CoreDataManager.shared.fetchData(request: GIFFavoriteItem.fetchRequest())
+            if isFavoriteGIFsEmpty(item: item) {
+                CoreDataManager.shared.deleteGIFItem(object: favoriteGIFs.filter { $0.id == item.id }[0])
+                favoriteGIFs = CoreDataManager.shared.fetchData(request: GIFFavoriteItem.fetchRequest())
             } else {
                 CoreDataManager.shared.saveGIFItem(item: item)
-                gifFavoriteItemList = CoreDataManager.shared.fetchData(request: GIFFavoriteItem.fetchRequest())
+                favoriteGIFs = CoreDataManager.shared.fetchData(request: GIFFavoriteItem.fetchRequest())
             }
         }
         // 즐겨찾기 목록에서 눌렀을 때
@@ -38,8 +38,8 @@ final class DetailViewModel: DetailViewModelProtocol {
     }
 
     // 데이터베이스에 해당 데이터 있는지 확인
-    func checkDatabase(item: GIFItem) -> Bool {
-        let filterValue = gifFavoriteItemList.filter { $0.id == item.id }
+    func isFavoriteGIFsEmpty(item: GIFItem) -> Bool {
+        let filterValue = favoriteGIFs.filter { $0.id == item.id }
         if filterValue.count >= 1 {
             return true
         } else {

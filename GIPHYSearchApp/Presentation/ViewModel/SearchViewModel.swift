@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SearchViewModelProtocol {
-    func requestGIFData(style: CategoryStatus, query: String, completion: @escaping (Bool, String?) -> Void)
+    func requestGIFs(style: CategoryStatus, query: String, completion: @escaping (Bool, String?) -> Void)
     func requestNextGIFData(style: CategoryStatus, query: String, completion: @escaping (String?) -> Void)
 }
 
@@ -28,9 +28,9 @@ final class SearchViewModel: SearchViewModelProtocol {
     }
 
     // 검색 요청 로직
-    func requestGIFData(style: CategoryStatus, query: String, completion: @escaping (Bool, String?) -> Void) {
+    func requestGIFs(style: CategoryStatus, query: String, completion: @escaping (Bool, String?) -> Void) {
         start = 0
-        useCase.getGIFData(style: style, query: query, start: start, display: display) { [weak self] result in
+        useCase.getGIFs(style: style, query: query, start: start, display: display) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let data):
@@ -48,7 +48,7 @@ final class SearchViewModel: SearchViewModelProtocol {
     func requestNextGIFData(style: CategoryStatus, query: String, completion: @escaping (String?) -> Void) {
         start += display
         guard start + display <= total || start < total else { return }
-        useCase.getGIFData(style: style, query: query, start: start, display: display) { [weak self] result in
+        useCase.getGIFs(style: style, query: query, start: start, display: display) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let data):

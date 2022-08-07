@@ -15,7 +15,7 @@ final class SearchUseCase {
         self.repository = repository
     }
 
-    func getGIFData(style: CategoryStatus, query: String, start: Int, display: Int, completion: @escaping (Result<GIFData, SearchError>) -> Void) {
+    func getGIFs(style: CategoryStatus, query: String, start: Int, display: Int, completion: @escaping (Result<GIFData, SearchError>) -> Void) {
         repository.getGiphyData(style: style, query: query, start: start, display: display, completion: completion)
     }
 }

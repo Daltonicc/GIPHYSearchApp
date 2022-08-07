@@ -62,7 +62,7 @@ final class DetailViewController: BaseViewController {
     private func contentViewConfigBySearch() {
         guard let item = item else { return }
         guard let viewModel = viewModel else { return }
-        isFavorite = viewModel.checkDatabase(item: item)
+        isFavorite = viewModel.isFavoriteGIFsEmpty(item: item)
         contentViewConfig(avatar: item.user.avatarURL,
                           gif: item.images.original.url,
                           name: item.user.name,
@@ -101,13 +101,13 @@ final class DetailViewController: BaseViewController {
             // 즐겨찾기 목록에서 좋아요 해제 로직
             if let favoriteItem = self.favoriteItem {
                 self.removeAlert { _ in
-                    viewModel.pressFavoriteButton(item: self.item, favoriteItem: favoriteItem) {
+                    viewModel.didTapFavoriteButton(item: self.item, favoriteItem: favoriteItem) {
                         self.navigationController?.popViewController(animated: true)
                     }
                 }
             // 검색 목록에서 좋아요 추가/해제 로직
             } else {
-                viewModel.pressFavoriteButton(item: self.item, favoriteItem: self.favoriteItem, completion: nil)
+                viewModel.didTapFavoriteButton(item: self.item, favoriteItem: self.favoriteItem, completion: nil)
             }
         }
     }

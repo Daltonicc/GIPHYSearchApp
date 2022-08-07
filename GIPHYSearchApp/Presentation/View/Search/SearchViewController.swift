@@ -70,7 +70,7 @@ class SearchViewController: BaseViewController {
     private func requestGIFData() {
         guard let query = mainView.textFieldView.textField.text else { return }
         guard query.count >= 1 else { return }
-        viewModel?.requestGIFData(style: mainView.categoryView.status, query: query, completion: { [weak self] bool, error in
+        viewModel?.requestGIFs(style: mainView.categoryView.status, query: query, completion: { [weak self] bool, error in
             guard let self = self else { return }
             if let error = error {
                 self.showToast(vc: self, message: error)
