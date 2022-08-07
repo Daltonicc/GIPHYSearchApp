@@ -7,25 +7,25 @@
 
 import Foundation
 
-protocol FavoriteViewModelProtocol {
-    func requestFavoriteGIFItemList(completion: (Bool) -> Void)
+protocol FavoriteViewModelInput {
+    func requestFavoriteGIFs()
 }
 
-final class FavoriteViewModel: FavoriteViewModelProtocol {
+final class FavoriteViewModel {
+    @Published var favoriteGIFs: [GIFFavoriteItem] = []
+    @Published var isEmpty = true
+}
 
-    var gifFavoriteItemList: Observable<[GIFFavoriteItem]> = Observable([])
-
-    // 즐겨찾기 목록 가져오기
-    func requestFavoriteGIFItemList(completion: (Bool) -> Void) {
-        gifFavoriteItemList.value = CoreDataManager.shared.fetchData(request: GIFFavoriteItem.fetchRequest())
-        completion(checkEmptyList())
+extension FavoriteViewModel: FavoriteViewModelInput {
+    func requestFavoriteGIFs() {
+        favoriteGIFs = CoreDataManager.shared.fetchData(request: GIFFavoriteItem.fetchRequest())
+        isEmpty = isFavoriteGIFsEmpty()
     }
 }
 
 extension FavoriteViewModel {
-
-    private func checkEmptyList() -> Bool {
-        if gifFavoriteItemList.value.count == 0 {
+    private func isFavoriteGIFsEmpty() -> Bool {
+        if favoriteGIFs.isEmpty {
             return false
         } else {
             return true

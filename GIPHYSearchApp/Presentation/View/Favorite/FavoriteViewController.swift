@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import Combine
 
 final class FavoriteViewController: BaseViewController {
 
     private let mainView = FavoriteView()
     var viewModel: FavoriteViewModel?
+
+    private var cancellables = Set<AnyCancellable>()
 
     override func loadView() {
         self.view = mainView
@@ -40,17 +43,21 @@ final class FavoriteViewController: BaseViewController {
 
     // 데이터 바인딩
     private func bind() {
-        viewModel?.gifFavoriteItemList.bind({ [weak self] item in
-            guard let self = self else { return }
-            self.mainView.favoriteCollectionView.reloadData()
-        })
+        viewModel?.$favoriteGIFs
+            .sink { [weak self] gifs in
+                self?.mainView.favoriteCollectionView.reloadData()
+            }
+            .store(in: &cancellables)
+
+        viewModel?.$isEmpty
+            .sink { [weak self] isEmpty in
+                self?.mainView.noResultLabel.isHidden = isEmpty
+            }
+            .store(in: &cancellables)
     }
 
     private func getFavoriteGIFItem() {
-        viewModel?.requestFavoriteGIFItemList(completion: { [weak self] bool in
-            guard let self = self else { return }
-            self.mainView.noResultLabel.isHidden = bool
-        })
+        viewModel?.requestFavoriteGIFs()
     }
 
     private func showDetailView(favoriteItem: GIFFavoriteItem) {
@@ -64,19 +71,19 @@ final class FavoriteViewController: BaseViewController {
 extension FavoriteViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.gifFavoriteItemList.value.count ?? 0
+        return viewModel?.favoriteGIFs.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContentCollectionViewCell.identifier, for: indexPath) as? ContentCollectionViewCell else { return UICollectionViewCell() }
         guard let viewModel = viewModel else { return UICollectionViewCell() }
-        cell.cellConfig(gifURL: viewModel.gifFavoriteItemList.value[indexPath.row].previewURL ?? "")
+        cell.cellConfig(gifURL: viewModel.favoriteGIFs[indexPath.row].previewURL ?? "")
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let viewModel = viewModel else { return }
-        showDetailView(favoriteItem: viewModel.gifFavoriteItemList.value[indexPath.row])
+        showDetailView(favoriteItem: viewModel.favoriteGIFs[indexPath.row])
     }
 }

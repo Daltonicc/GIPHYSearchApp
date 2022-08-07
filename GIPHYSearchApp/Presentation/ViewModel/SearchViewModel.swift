@@ -13,7 +13,6 @@ protocol SearchViewModelProtocol {
 }
 
 final class SearchViewModel: SearchViewModelProtocol {
-
     let useCase: SearchUseCase
 
     private var total = 0
@@ -63,7 +62,6 @@ final class SearchViewModel: SearchViewModelProtocol {
 }
 
 extension SearchViewModel {
-
     private func noResultCheck() -> Bool {
         if gifs.count == 0 {
             return false
