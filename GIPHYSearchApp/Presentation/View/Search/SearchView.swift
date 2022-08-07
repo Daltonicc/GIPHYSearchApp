@@ -60,7 +60,7 @@ final class SearchView: BaseView {
         gradientConfig()
     }
 
-    override func setUpView() {
+    override func configure() {
 
         addSubview(textFieldView)
         addSubview(categoryView)
@@ -69,7 +69,7 @@ final class SearchView: BaseView {
         addSubview(gradientView)
     }
 
-    override func setUpConstraint() {
+    override func layout() {
 
         textFieldView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
         textFieldView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true

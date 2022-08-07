@@ -43,7 +43,7 @@ final class TextFieldView: BaseView {
         super.init(coder: coder)
     }
 
-    override func setUpView() {
+    override func configure() {
 
         self.backgroundColor = .white
 
@@ -52,7 +52,7 @@ final class TextFieldView: BaseView {
         addSubview(searchButton)
     }
 
-    override func setUpConstraint() {
+    override func layout() {
 
         textField.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         textField.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true

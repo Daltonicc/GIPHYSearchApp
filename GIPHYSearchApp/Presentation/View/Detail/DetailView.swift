@@ -53,7 +53,7 @@ final class DetailView: BaseView {
         super.init(coder: coder)
     }
 
-    override func setUpView() {
+    override func configure() {
 
         addSubview(scrollView)
         scrollView.addSubview(contentView)
@@ -62,7 +62,7 @@ final class DetailView: BaseView {
         scrollView.addSubview(favoriteButton)
     }
 
-    override func setUpConstraint() {
+    override func layout() {
 
         scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
         scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true

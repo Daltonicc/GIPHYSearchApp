@@ -39,13 +39,13 @@ final class FavoriteView: BaseView {
         super.init(coder: coder)
     }
 
-    override func setUpView() {
+    override func configure() {
 
         addSubview(favoriteCollectionView)
         addSubview(noResultLabel)
     }
 
-    override func setUpConstraint() {
+    override func layout() {
 
         favoriteCollectionView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
         favoriteCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true

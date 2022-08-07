@@ -27,21 +27,21 @@ final class ContentGIFView: BaseView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpView()
-        setUpConstraint()
+        configure()
+        layout()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
 
-    override func setUpView() {
+    override func configure() {
 
         addSubview(imageView)
         addSubview(indicatorView)
     }
 
-    override func setUpConstraint() {
+    override func layout() {
 
         imageView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true

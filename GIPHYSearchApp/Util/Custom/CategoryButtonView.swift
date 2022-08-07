@@ -72,7 +72,7 @@ final class CategoryButtonView: BaseView {
         super.init(coder: coder)
     }
 
-    override func setUpView() {
+    override func configure() {
 
         addSubview(categoryStackView)
         categoryStackView.addArrangedSubview(gifButton)
@@ -84,7 +84,7 @@ final class CategoryButtonView: BaseView {
         textButton.addTarget(self, action: #selector(buttonTap(sender:)), for: .touchUpInside)
     }
 
-    override func setUpConstraint() {
+    override func layout() {
 
         categoryStackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         categoryStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
