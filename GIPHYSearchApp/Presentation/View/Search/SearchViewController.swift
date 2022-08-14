@@ -66,29 +66,30 @@ class SearchViewController: BaseViewController {
             .store(in: &cancellables)
     }
 
-    // GIF Requset
     private func requestGIFData() {
-        guard let query = mainView.textFieldView.textField.text else { return }
-        guard query.count >= 1 else { return }
-        viewModel?.requestGIFs(style: mainView.categoryView.status, query: query, completion: { [weak self] bool, error in
-            guard let self = self else { return }
-            if let error = error {
-                self.showToast(vc: self, message: error)
-            }
-            self.mainView.noResultLabel.isHidden = bool
-        })
+        guard let query = mainView.textFieldView.textField.text else {
+            return
+        }
+        if query.isEmpty {
+            return
+        }
+
+        Task {
+            await viewModel?.requestGIFs(style: mainView.categoryView.status, query: query)
+        }
     }
 
-    // Pagination
     private func requestNextPageData() {
-        guard let query = mainView.textFieldView.textField.text else { return }
-        guard query.count >= 1 else { return }
-        viewModel?.requestNextGIFData(style: mainView.categoryView.status, query: query, completion: { [weak self] error in
-            guard let self = self else { return }
-            if let error = error {
-                self.showToast(vc: self, message: error)
-            }
-        })
+        guard let query = mainView.textFieldView.textField.text else {
+            return
+        }
+        if query.isEmpty {
+            return
+        }
+
+        Task {
+            await viewModel?.requestNextGIFs(style: mainView.categoryView.status, query: query)
+        }
     }
 
     // 디테일 뷰 이동
