@@ -12,7 +12,13 @@ protocol SearchViewModelProtocol {
     func requestNextGIFData(style: CategoryStatus, query: String, completion: @escaping (String?) -> Void)
 }
 
+protocol SearchViewModelOutput {
+    func showErrorToast(_ errorMessage: String)
+}
+
 final class SearchViewModel: SearchViewModelProtocol {
+    weak var outputDelegate: SearchViewModelOutput?
+
     let useCase: SearchUseCase
 
     private var total = 0
@@ -28,35 +34,33 @@ final class SearchViewModel: SearchViewModelProtocol {
     }
 
     // 검색 요청 로직
-    func requestGIFs(style: CategoryStatus, query: String, completion: @escaping (Bool, String?) -> Void) {
+    func requestGIFs(style: CategoryStatus, query: String) async {
         start = 0
-        useCase.getGIFs(style: style, query: query, start: start, display: display) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let data):
-                self.navigationTitle = query
-                self.total = data.pagination.total
-                self.gifs = data.item
-                completion(self.noResultCheck(), nil)
-            case .failure(let error):
-                completion(false, error.errorDescription)
-            }
+        do {
+            let gifEntity = try await useCase.getGIFs(style: style, query: query, start: start, display: display)
+            navigationTitle = query
+            total = gifEntity.pagination.total
+            gifs = gifEntity.item
+            isEmpty = noResultCheck()
+        } catch {
+            let error = error as? SearchError
+            outputDelegate?.showErrorToast(error?.errorDescription ?? "")
         }
     }
 
     // 다음 페이지 검색 요청 로직
-    func requestNextGIFData(style: CategoryStatus, query: String, completion: @escaping (String?) -> Void) {
+    func requestNextGIFData(style: CategoryStatus, query: String) async {
         start += display
-        guard start + display <= total || start < total else { return }
-        useCase.getGIFs(style: style, query: query, start: start, display: display) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let data):
-                self.appendData(data: data.item)
-                completion(nil)
-            case .failure(let error):
-                completion(error.errorDescription)
-            }
+        guard start + display <= total || start < total else {
+            return
+        }
+
+        do {
+            let gifEntity = try await useCase.getGIFs(style: style, query: query, start: start, display: display)
+            appendData(data: gifEntity.item)
+        } catch {
+            let error = error as? SearchError
+            outputDelegate?.showErrorToast(error?.errorDescription ?? "")
         }
     }
 }
