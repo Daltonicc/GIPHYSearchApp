@@ -12,7 +12,7 @@ protocol SearchViewModelProtocol {
     func requestNextGIFData(style: CategoryStatus, query: String, completion: @escaping (String?) -> Void)
 }
 
-protocol SearchViewModelOutput {
+protocol SearchViewModelOutput: AnyObject {
     func showErrorToast(_ errorMessage: String)
 }
 
@@ -41,7 +41,7 @@ final class SearchViewModel: SearchViewModelProtocol {
             navigationTitle = query
             total = gifEntity.pagination.total
             gifs = gifEntity.item
-            isEmpty = noResultCheck()
+            isEmpty = isGIFsEmpty()
         } catch {
             let error = error as? SearchError
             outputDelegate?.showErrorToast(error?.errorDescription ?? "")
@@ -57,7 +57,7 @@ final class SearchViewModel: SearchViewModelProtocol {
 
         do {
             let gifEntity = try await useCase.getGIFs(style: style, query: query, start: start, display: display)
-            appendData(data: gifEntity.item)
+            appendGIF(data: gifEntity.item)
         } catch {
             let error = error as? SearchError
             outputDelegate?.showErrorToast(error?.errorDescription ?? "")
@@ -66,7 +66,7 @@ final class SearchViewModel: SearchViewModelProtocol {
 }
 
 extension SearchViewModel {
-    private func noResultCheck() -> Bool {
+    private func isGIFsEmpty() -> Bool {
         if gifs.count == 0 {
             return false
         } else {
@@ -74,7 +74,7 @@ extension SearchViewModel {
         }
     }
 
-    private func appendData(data: [GIFItem]) {
+    private func appendGIF(data: [GIFItem]) {
         for i in data {
             self.gifs.append(i)
         }
