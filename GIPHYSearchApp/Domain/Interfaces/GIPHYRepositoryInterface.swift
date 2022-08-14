@@ -8,9 +8,5 @@
 import Foundation
 
 protocol GIPHYRepositoryInterface {
-    func getGiphyData(style: CategoryStatus,
-                      query: String,
-                      start: Int,
-                      display: Int,
-                      completion: @escaping (Result<GIFs, SearchError>) -> Void)
+    func requestGIFs(style: CategoryStatus, query: String, start: Int, display: Int) async throws -> GIFs
 }
