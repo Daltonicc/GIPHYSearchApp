@@ -37,7 +37,7 @@ final class SearchViewModel: SearchViewModelProtocol {
     func requestGIFs(style: CategoryStatus, query: String) async {
         start = 0
         do {
-            let gifEntity = try await useCase.getGIFs(style: style, query: query, start: start, display: display)
+            let gifEntity = try await useCase.requestGIFs(style: style, query: query, start: start, display: display)
             navigationTitle = query
             total = gifEntity.pagination.total
             gifs = gifEntity.item
@@ -56,7 +56,7 @@ final class SearchViewModel: SearchViewModelProtocol {
         }
 
         do {
-            let gifEntity = try await useCase.getGIFs(style: style, query: query, start: start, display: display)
+            let gifEntity = try await useCase.requestGIFs(style: style, query: query, start: start, display: display)
             appendGIF(data: gifEntity.item)
         } catch {
             let error = error as? SearchError

@@ -15,7 +15,7 @@ final class SearchUseCase {
         self.repository = repository
     }
 
-    func getGIFs(style: CategoryStatus, query: String, start: Int, display: Int) async throws -> GIFs {
+    func requestGIFs(style: CategoryStatus, query: String, start: Int, display: Int) async throws -> GIFs {
         do {
             return try await repository.requestGIFs(style: style, query: query, start: start, display: display)
         } catch {
