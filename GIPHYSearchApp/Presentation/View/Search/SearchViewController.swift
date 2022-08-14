@@ -34,6 +34,7 @@ class SearchViewController: BaseViewController {
         mainView.textFieldView.searchButton.addTarget(self, action: #selector(searchButtonClicked), for: .touchUpInside)
 
         mainView.categoryView.delegate = self
+        viewModel?.outputDelegate = self
     }
 
     override func configureNavigationItem() {
@@ -125,6 +126,14 @@ extension SearchViewController: UITextFieldDelegate {
 extension SearchViewController: CategoryButtonDelegate {
     func didTapCategoryButton() {
         requestGIFData()
+    }
+}
+
+extension SearchViewController: SearchViewModelOutput {
+    func showErrorToast(_ errorMessage: String) {
+        DispatchQueue.main.async {
+            self.showToast(vc: self, message: errorMessage)
+        }
     }
 }
 
