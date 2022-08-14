@@ -35,7 +35,7 @@
 		6AE8EC9F28200FE900D4CDD5 /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE8EC9E28200FE900D4CDD5 /* HomeTabBarController.swift */; };
 		6AE8ECA3282010F500D4CDD5 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE8ECA2282010F500D4CDD5 /* FavoriteViewController.swift */; };
 		6AE8ECA52820281000D4CDD5 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE8ECA42820281000D4CDD5 /* NetworkError.swift */; };
-		6AE8ECA728203C4B00D4CDD5 /* GIFData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE8ECA628203C4B00D4CDD5 /* GIFData.swift */; };
+		6AE8ECA728203C4B00D4CDD5 /* GIFs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE8ECA628203C4B00D4CDD5 /* GIFs.swift */; };
 		6AE8ECA92820436A00D4CDD5 /* SearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE8ECA82820436A00D4CDD5 /* SearchUseCase.swift */; };
 		6AE8ECAB2820467100D4CDD5 /* GIPHYRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE8ECAA2820467100D4CDD5 /* GIPHYRepositoryInterface.swift */; };
 		6AE8ECAE28204E2300D4CDD5 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE8ECAD28204E2300D4CDD5 /* Observable.swift */; };
@@ -101,7 +101,7 @@
 		6AE8EC9E28200FE900D4CDD5 /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		6AE8ECA2282010F500D4CDD5 /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		6AE8ECA42820281000D4CDD5 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
-		6AE8ECA628203C4B00D4CDD5 /* GIFData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFData.swift; sourceTree = "<group>"; };
+		6AE8ECA628203C4B00D4CDD5 /* GIFs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFs.swift; sourceTree = "<group>"; };
 		6AE8ECA82820436A00D4CDD5 /* SearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUseCase.swift; sourceTree = "<group>"; };
 		6AE8ECAA2820467100D4CDD5 /* GIPHYRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIPHYRepositoryInterface.swift; sourceTree = "<group>"; };
 		6AE8ECAD28204E2300D4CDD5 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
@@ -274,7 +274,7 @@
 		6AE8EC69281F9CDF00D4CDD5 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				6AE8ECA628203C4B00D4CDD5 /* GIFData.swift */,
+				6AE8ECA628203C4B00D4CDD5 /* GIFs.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -567,7 +567,7 @@
 				6AE8ECBD2820EBF500D4CDD5 /* DetailViewController.swift in Sources */,
 				6AE8ECA3282010F500D4CDD5 /* FavoriteViewController.swift in Sources */,
 				6AE8EC89281FD8C600D4CDD5 /* EndPoint.swift in Sources */,
-				6AE8ECA728203C4B00D4CDD5 /* GIFData.swift in Sources */,
+				6AE8ECA728203C4B00D4CDD5 /* GIFs.swift in Sources */,
 				6AE8ECBB2820C3B900D4CDD5 /* UIViewController+Extension.swift in Sources */,
 				6AE8ECB42820693700D4CDD5 /* UIImage+Extension.swift in Sources */,
 				6AE8EC78281FC9B300D4CDD5 /* SearchView.swift in Sources */,

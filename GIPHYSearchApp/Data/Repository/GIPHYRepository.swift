@@ -10,8 +10,7 @@ import Alamofire
 
 final class GIPHYRepository: GIPHYRepositoryInterface {
 
-    func getGiphyData(style: CategoryStatus, query: String, start: Int, display: Int, completion: @escaping (Result<GIFData, SearchError>) -> Void) {
-
+    func getGiphyData(style: CategoryStatus, query: String, start: Int, display: Int, completion: @escaping (Result<GIFs, SearchError>) -> Void) {
         var giphyAPI: GIPHYAPI = .getGifData(query: query, start: start, display: display)
 
         switch style {

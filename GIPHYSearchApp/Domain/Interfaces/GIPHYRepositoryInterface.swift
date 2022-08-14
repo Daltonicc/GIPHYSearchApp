@@ -12,5 +12,5 @@ protocol GIPHYRepositoryInterface {
                       query: String,
                       start: Int,
                       display: Int,
-                      completion: @escaping (Result<GIFData, SearchError>) -> Void)
+                      completion: @escaping (Result<GIFs, SearchError>) -> Void)
 }

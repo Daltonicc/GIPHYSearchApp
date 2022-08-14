@@ -68,7 +68,7 @@ struct PaginationDTO: Codable {
 // MARK: - To Entity
 
 extension GIFSearchResponseDTO {
-    func toEntity() -> GIFData {
+    func toEntity() -> GIFs {
         return .init(item: data.map { $0.toEntity() },
                      pagination: pagination.toEntity())
     }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GIFData {
+struct GIFs {
     let item: [GIFItem]
     let pagination: Pagination
 }
