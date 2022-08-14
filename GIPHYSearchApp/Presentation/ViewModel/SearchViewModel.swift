@@ -9,7 +9,7 @@ import Foundation
 
 protocol SearchViewModelProtocol {
     func requestGIFs(style: CategoryStatus, query: String) async
-    func requestNextGIFData(style: CategoryStatus, query: String) async
+    func requestNextGIFs(style: CategoryStatus, query: String) async
 }
 
 protocol SearchViewModelOutput: AnyObject {
@@ -49,7 +49,7 @@ final class SearchViewModel: SearchViewModelProtocol {
     }
 
     // 다음 페이지 검색 요청 로직
-    func requestNextGIFData(style: CategoryStatus, query: String) async {
+    func requestNextGIFs(style: CategoryStatus, query: String) async {
         start += display
         guard start + display <= total || start < total else {
             return
