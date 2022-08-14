@@ -8,8 +8,8 @@
 import Foundation
 
 protocol SearchViewModelProtocol {
-    func requestGIFs(style: CategoryStatus, query: String, completion: @escaping (Bool, String?) -> Void)
-    func requestNextGIFData(style: CategoryStatus, query: String, completion: @escaping (String?) -> Void)
+    func requestGIFs(style: CategoryStatus, query: String) async
+    func requestNextGIFData(style: CategoryStatus, query: String) async
 }
 
 protocol SearchViewModelOutput: AnyObject {
