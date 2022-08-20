@@ -12,7 +12,15 @@ struct GIFs {
     let pagination: Pagination
 }
 
-struct GIFItem {
+struct GIFItem: Hashable {
+    static func == (lhs: GIFItem, rhs: GIFItem) -> Bool {
+        lhs.uuid == rhs.uuid
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(uuid)
+    }
+
     let type: String
     let id: String
     let webPageURL: String
@@ -20,6 +28,7 @@ struct GIFItem {
     let images: GIFCategory
     let user: UserData
     let isFavorite: Bool
+    let uuid = UUID()
 }
 
 struct GIFCategory {
