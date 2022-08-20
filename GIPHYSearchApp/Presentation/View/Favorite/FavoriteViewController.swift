@@ -14,6 +14,7 @@ final class FavoriteViewController: BaseViewController {
     var viewModel: FavoriteViewModel?
 
     private var cancellables = Set<AnyCancellable>()
+    private var datasource: UICollectionViewDiffableDataSource<Int, GIFFavoriteItem>!
 
     override func loadView() {
         self.view = mainView
@@ -31,8 +32,10 @@ final class FavoriteViewController: BaseViewController {
     override func configureView() {
         view.backgroundColor = .black
         mainView.favoriteCollectionView.delegate = self
-        mainView.favoriteCollectionView.dataSource = self
+        mainView.favoriteCollectionView.dataSource = datasource
         mainView.favoriteCollectionView.register(ContentCollectionViewCell.self, forCellWithReuseIdentifier: ContentCollectionViewCell.identifier)
+
+        configureDatasource()
     }
 
     override func configureNavigationItem() {
@@ -41,11 +44,27 @@ final class FavoriteViewController: BaseViewController {
                                                                    .foregroundColor: UIColor.white]
     }
 
+    private func configureDatasource() {
+        datasource = UICollectionViewDiffableDataSource(collectionView: mainView.favoriteCollectionView, cellProvider: { collectionView, indexPath, gif in
+                  guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContentCollectionViewCell.identifier, for: indexPath) as? ContentCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            cell.cellConfig(gifURL: gif.previewURL ?? "")
+
+            return cell
+        })
+    }
+
     // 데이터 바인딩
     private func bind() {
         viewModel?.$favoriteGIFs
             .sink { [weak self] gifs in
-                self?.mainView.favoriteCollectionView.reloadData()
+                var snapshot = NSDiffableDataSourceSnapshot<Int, GIFFavoriteItem>()
+
+                snapshot.appendSections([0])
+                snapshot.appendItems(gifs)
+
+                self?.datasource.apply(snapshot)
             }
             .store(in: &cancellables)
 
@@ -68,18 +87,10 @@ final class FavoriteViewController: BaseViewController {
     }
 }
 
-extension FavoriteViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension FavoriteViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel?.favoriteGIFs.count ?? 0
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContentCollectionViewCell.identifier, for: indexPath) as? ContentCollectionViewCell else { return UICollectionViewCell() }
-        guard let viewModel = viewModel else { return UICollectionViewCell() }
-        cell.cellConfig(gifURL: viewModel.favoriteGIFs[indexPath.row].previewURL ?? "")
-        return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

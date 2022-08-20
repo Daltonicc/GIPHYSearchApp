@@ -162,21 +162,9 @@ extension SearchViewController: SearchViewModelOutput {
     }
 }
 
-extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension SearchViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel?.gifs.count ?? 0
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContentCollectionViewCell.identifier, for: indexPath) as? ContentCollectionViewCell else { return UICollectionViewCell() }
-        guard let viewModel = viewModel else { return UICollectionViewCell() }
-        cell.cellConfig(gifURL: viewModel.gifs[indexPath.row].images.preview.url)
-
-        // 마지막 데이터인지 확인하고 다음 페이지 요청
-        if indexPath.row == viewModel.gifs.count - 1 {
-            requestNextPageData()
-        }
-        return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
