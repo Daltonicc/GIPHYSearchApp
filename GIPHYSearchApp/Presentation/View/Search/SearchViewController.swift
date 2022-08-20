@@ -14,6 +14,7 @@ class SearchViewController: BaseViewController {
     var viewModel: SearchViewModel?
 
     private var cancellables = Set<AnyCancellable>()
+    private var datasource: UICollectionViewDiffableDataSource<Int, GIFItem>!
 
     override func loadView() {
         self.view = mainView
@@ -26,7 +27,7 @@ class SearchViewController: BaseViewController {
 
     override func configureView() {
         mainView.searchCollectionView.delegate = self
-        mainView.searchCollectionView.dataSource = self
+        mainView.searchCollectionView.dataSource = datasource
         mainView.searchCollectionView.keyboardDismissMode = .onDrag
         mainView.searchCollectionView.register(ContentCollectionViewCell.self, forCellWithReuseIdentifier: ContentCollectionViewCell.identifier)
 
@@ -35,6 +36,8 @@ class SearchViewController: BaseViewController {
 
         mainView.categoryView.delegate = self
         viewModel?.outputDelegate = self
+
+        configureDatasource()
     }
 
     override func configureNavigationItem() {
@@ -43,12 +46,34 @@ class SearchViewController: BaseViewController {
                                                                    .foregroundColor: UIColor.white]
     }
 
+    private func configureDatasource() {
+        datasource = UICollectionViewDiffableDataSource(collectionView: mainView.searchCollectionView, cellProvider: { [weak self] collectionView, indexPath, gif in
+            guard let self = self,
+                  let viewModel = self.viewModel,
+                  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContentCollectionViewCell.identifier, for: indexPath) as? ContentCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            cell.cellConfig(gifURL: gif.images.preview.url)
+
+            if indexPath.row == viewModel.gifs.count - 1 {
+                self.requestNextPageData()
+            }
+
+            return cell
+        })
+    }
+
     // 데이터 바인딩
     private func bind() {
         viewModel?.$gifs
             .receive(on: DispatchQueue.main)
             .sink { [weak self] gifs in
-                self?.mainView.searchCollectionView.reloadData()
+                var snapshot = NSDiffableDataSourceSnapshot<Int, GIFItem>()
+
+                snapshot.appendSections([0])
+                snapshot.appendItems(gifs)
+
+                self?.datasource.apply(snapshot)
             }
             .store(in: &cancellables)
 
