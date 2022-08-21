@@ -5,6 +5,7 @@ GIPHY 검색 API를 활용한 iOS 어플리케이션.
 ## Description
 - 최소 타겟 : iOS 13.0
 - 외부 라이브러리 최소화(Alamofire만 적용)
+- iOS 13.0 이상에서만 지원되는 API 활용(DiffableDataSource, async/await, Combine, CompositionalLayout)
 - Clean Architecture 패턴 적용
 - Core Data 프레임워크 사용으로 즐겨찾기 목록 유지
 - Storyboard를 활용하지 않고 코드로만 UI 구성
@@ -45,7 +46,7 @@ func cellConfig(gifURL: String) {
 
     Swift 
     Clean Architecture
-    UIKit, AutoLayout, CoreData
+    UIKit, Combine, AutoLayout, CoreData
     Alamofire
 
 ### Issue
