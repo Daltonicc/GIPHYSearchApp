@@ -19,18 +19,7 @@ final class SearchView: BaseView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    let searchCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width / 2 - 2, height: UIScreen.main.bounds.width / 3 - 20)
-        layout.minimumLineSpacing = 2
-        layout.minimumInteritemSpacing = 2
-        layout.sectionInset = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
-        layout.scrollDirection = .vertical
-        collectionView.backgroundColor = .black
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        return collectionView
-    }()
+    var searchCollectionView: UICollectionView!
     let noResultLabel: UILabel = {
         let label = UILabel()
         label.text = "No Datas Found"
@@ -60,35 +49,32 @@ final class SearchView: BaseView {
         configureGradient()
     }
 
-    override func configure() {
-
-        addSubview(textFieldView)
-        addSubview(categoryView)
-        addSubview(searchCollectionView)
-        addSubview(noResultLabel)
-        addSubview(gradientView)
-    }
-
     override func layout() {
 
+        addSubview(textFieldView)
         textFieldView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
         textFieldView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         textFieldView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         textFieldView.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
+        addSubview(categoryView)
         categoryView.topAnchor.constraint(equalTo: textFieldView.bottomAnchor, constant: 5).isActive = true
         categoryView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         categoryView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         categoryView.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
+        configureCollectionView()
+        addSubview(searchCollectionView)
         searchCollectionView.topAnchor.constraint(equalTo: categoryView.bottomAnchor, constant: 5).isActive = true
         searchCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         searchCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         searchCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
+        addSubview(noResultLabel)
         noResultLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         noResultLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
 
+        addSubview(gradientView)
         gradientView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         gradientView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         gradientView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
@@ -100,6 +86,69 @@ final class SearchView: BaseView {
 
         viewGradientLayer.frame = gradientView.bounds
         buttonGradientLayer.frame = textFieldView.searchButton.bounds
+    }
+
+    private func configureCollectionView() {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeCollectionViewLayout())
+        collectionView.backgroundColor = .black
+        searchCollectionView = collectionView
+        searchCollectionView.translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    private func makeCollectionViewLayout() -> UICollectionViewLayout {
+        let mainItem = NSCollectionLayoutItem(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(2/3),
+                heightDimension: .fractionalHeight(1.0)))
+        mainItem.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+
+        let pairItem = NSCollectionLayoutItem(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalHeight(0.5)))
+        pairItem.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+
+        let pairGroup = NSCollectionLayoutGroup.vertical(
+              layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1/3),
+                heightDimension: .fractionalHeight(1.0)),
+              subitem: pairItem,
+              count: 2)
+
+        let mainWithPairGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalWidth(4/9)),
+            subitems: [mainItem, pairGroup])
+
+        let tripletItem = NSCollectionLayoutItem(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1/3),
+                heightDimension: .fractionalHeight(1.0)))
+        tripletItem.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+
+        let tripletGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalWidth(2/9)),
+            subitems: [tripletItem, tripletItem, tripletItem])
+
+        let mainWithPairReversedGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalWidth(4/9)),
+            subitems: [pairGroup, mainItem])
+
+        let nestedGroup = NSCollectionLayoutGroup.vertical(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalWidth(16/9)),
+            subitems: [mainWithPairGroup, tripletGroup, mainWithPairReversedGroup])
+
+        let section = NSCollectionLayoutSection(group: nestedGroup)
+        let layout = UICollectionViewCompositionalLayout(section: section)
+
+        return layout
     }
 
     func configureGradient() {
