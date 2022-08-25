@@ -52,12 +52,12 @@ final class SearchView: BaseView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        gradientConfig()
+        configureGradient()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        gradientConfig()
+        configureGradient()
     }
 
     override func configure() {
@@ -102,7 +102,7 @@ final class SearchView: BaseView {
         buttonGradientLayer.frame = textFieldView.searchButton.bounds
     }
 
-    func gradientConfig() {
+    func configureGradient() {
         
         gradientView.setGradient(gradient: viewGradientLayer,
                                  startColor: UIColor(red: 100/255, green: 100/255, blue: 50/255, alpha: 0),
