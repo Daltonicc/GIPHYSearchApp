@@ -40,7 +40,6 @@ final class FavoriteView: BaseView {
     }
 
     override func layout() {
-
         addSubview(favoriteCollectionView)
         favoriteCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

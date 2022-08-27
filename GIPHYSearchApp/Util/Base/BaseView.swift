@@ -19,6 +19,5 @@ class BaseView: UIView, ViewRepresentable {
         super.init(coder: coder)
     }
 
-    func configure() {}
     func layout() {}
 }
