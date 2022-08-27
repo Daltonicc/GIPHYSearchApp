@@ -39,20 +39,22 @@ final class FavoriteView: BaseView {
         super.init(coder: coder)
     }
 
-    override func configure() {
-
-        addSubview(favoriteCollectionView)
-        addSubview(noResultLabel)
-    }
-
     override func layout() {
 
-        favoriteCollectionView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
-        favoriteCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        favoriteCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        favoriteCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        addSubview(favoriteCollectionView)
+        favoriteCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            favoriteCollectionView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+            favoriteCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            favoriteCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            favoriteCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
 
-        noResultLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        noResultLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        addSubview(noResultLabel)
+        noResultLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            noResultLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            noResultLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+        ])
     }
 }
