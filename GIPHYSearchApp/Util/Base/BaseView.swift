@@ -11,7 +11,6 @@ class BaseView: UIView, ViewRepresentable {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
         layout()
     }
 
