@@ -22,11 +22,7 @@ final class DetailView: BaseView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    let userImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
+    let userImageView = UIImageView()
     let usernameLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 20)
@@ -53,38 +49,48 @@ final class DetailView: BaseView {
         super.init(coder: coder)
     }
 
-    override func configure() {
-
-        addSubview(scrollView)
-        scrollView.addSubview(contentView)
-        scrollView.addSubview(userImageView)
-        scrollView.addSubview(usernameLabel)
-        scrollView.addSubview(favoriteButton)
-    }
-
     override func layout() {
+        addSubview(scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
 
-        scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
-        scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        scrollView.addSubview(contentView)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10),
+            contentView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 20)
+        ])
 
-        contentView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-        contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10).isActive = true
-        contentView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 20).isActive = true
+        scrollView.addSubview(userImageView)
+        userImageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            userImageView.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 10),
+            userImageView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10),
+            userImageView.widthAnchor.constraint(equalToConstant: 50),
+            userImageView.heightAnchor.constraint(equalToConstant: 50)
+        ])
 
-        userImageView.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 10).isActive = true
-        userImageView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10).isActive = true
-        userImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        userImageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        scrollView.addSubview(usernameLabel)
+        usernameLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            usernameLabel.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 10),
+            usernameLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 10),
+            usernameLabel.heightAnchor.constraint(equalToConstant: 40)
+        ])
 
-        usernameLabel.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 10).isActive = true
-        usernameLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 10).isActive = true
-        usernameLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
-
-        favoriteButton.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 10).isActive = true
-        favoriteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10).isActive = true
-        favoriteButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        favoriteButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        scrollView.addSubview(favoriteButton)
+        favoriteButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            favoriteButton.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 10),
+            favoriteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+            favoriteButton.heightAnchor.constraint(equalToConstant: 40),
+            favoriteButton.widthAnchor.constraint(equalToConstant: 40)
+        ])
     }
 }
