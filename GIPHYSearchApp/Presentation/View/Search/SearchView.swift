@@ -9,16 +9,8 @@ import UIKit
 
 final class SearchView: BaseView {
 
-    let textFieldView: TextFieldView = {
-        let view = TextFieldView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    let categoryView: CategoryButtonView = {
-        let view = CategoryButtonView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    let textFieldView = TextFieldView()
+    let categoryView = CategoryButtonView()
     var searchCollectionView: UICollectionView!
     let noResultLabel: UILabel = {
         let label = UILabel()
@@ -50,40 +42,53 @@ final class SearchView: BaseView {
     }
 
     override func layout() {
-
         addSubview(textFieldView)
-        textFieldView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
-        textFieldView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        textFieldView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        textFieldView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        textFieldView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            textFieldView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+            textFieldView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            textFieldView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            textFieldView.heightAnchor.constraint(equalToConstant: 50)
+        ])
 
         addSubview(categoryView)
-        categoryView.topAnchor.constraint(equalTo: textFieldView.bottomAnchor, constant: 5).isActive = true
-        categoryView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        categoryView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        categoryView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        categoryView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            categoryView.topAnchor.constraint(equalTo: textFieldView.bottomAnchor, constant: 5),
+            categoryView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            categoryView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            categoryView.heightAnchor.constraint(equalToConstant: 50)
+        ])
 
         configureCollectionView()
         addSubview(searchCollectionView)
-        searchCollectionView.topAnchor.constraint(equalTo: categoryView.bottomAnchor, constant: 5).isActive = true
-        searchCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        searchCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        searchCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        searchCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            searchCollectionView.topAnchor.constraint(equalTo: categoryView.bottomAnchor, constant: 5),
+            searchCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            searchCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            searchCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
 
         addSubview(noResultLabel)
-        noResultLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        noResultLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        noResultLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            noResultLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            noResultLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+        ])
 
         addSubview(gradientView)
-        gradientView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        gradientView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        gradientView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        gradientView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        gradientView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            gradientView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            gradientView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            gradientView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            gradientView.heightAnchor.constraint(equalToConstant: 250)
+        ])
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-
         viewGradientLayer.frame = gradientView.bounds
         buttonGradientLayer.frame = textFieldView.searchButton.bounds
     }
@@ -151,8 +156,7 @@ final class SearchView: BaseView {
         return layout
     }
 
-    func configureGradient() {
-        
+    private func configureGradient() {
         gradientView.setGradient(gradient: viewGradientLayer,
                                  startColor: UIColor(red: 100/255, green: 100/255, blue: 50/255, alpha: 0),
                                  finishColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1),
