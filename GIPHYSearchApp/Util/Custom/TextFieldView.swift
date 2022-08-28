@@ -11,7 +11,6 @@ final class TextFieldView: BaseView {
 
     let textField: UITextField = {
         let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Search GIPHY"
         textField.borderStyle = .none
         textField.textColor = .black
@@ -20,7 +19,6 @@ final class TextFieldView: BaseView {
     }()
     let buttonView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.isUserInteractionEnabled = false
         return view
     }()
@@ -28,7 +26,6 @@ final class TextFieldView: BaseView {
         let button = UIButton()
         button.tintColor = .white
         button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.contentVerticalAlignment = .fill
         button.contentHorizontalAlignment = .fill
         button.imageEdgeInsets = UIEdgeInsets(top: 5, left: 3, bottom: 5, right: 5)
@@ -43,30 +40,34 @@ final class TextFieldView: BaseView {
         super.init(coder: coder)
     }
 
-    override func configure() {
-
+    override func layout() {
         self.backgroundColor = .white
+        
+        addSubview(buttonView)
+        buttonView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            buttonView.topAnchor.constraint(equalTo: self.topAnchor),
+            buttonView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            buttonView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            buttonView.widthAnchor.constraint(equalToConstant: 50)
+        ])
+
+        addSubview(searchButton)
+        searchButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            searchButton.topAnchor.constraint(equalTo: self.topAnchor),
+            searchButton.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            searchButton.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            searchButton.widthAnchor.constraint(equalToConstant: 50)
+        ])
 
         addSubview(textField)
-        addSubview(buttonView)
-        addSubview(searchButton)
-    }
-
-    override func layout() {
-
-        textField.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        textField.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        textField.trailingAnchor.constraint(equalTo: searchButton.leadingAnchor).isActive = true
-        textField.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-
-        buttonView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        buttonView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        buttonView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        buttonView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-
-        searchButton.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        searchButton.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        searchButton.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        searchButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            textField.topAnchor.constraint(equalTo: self.topAnchor),
+            textField.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            textField.trailingAnchor.constraint(equalTo: searchButton.leadingAnchor),
+            textField.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
     }
 }

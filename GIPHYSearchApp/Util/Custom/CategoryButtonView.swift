@@ -24,7 +24,6 @@ final class CategoryButtonView: BaseView {
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
         stackView.backgroundColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     let gifButton: UIButton = {
@@ -57,7 +56,7 @@ final class CategoryButtonView: BaseView {
 
     var status: CategoryStatus = .gif {
         didSet {
-            statusConfig()
+            configureStatus()
         }
     }
 
@@ -65,34 +64,29 @@ final class CategoryButtonView: BaseView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        statusConfig()
+        configureStatus()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
 
-    override func configure() {
-
+    override func layout() {
         addSubview(categoryStackView)
+        categoryStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            categoryStackView.topAnchor.constraint(equalTo: self.topAnchor),
+            categoryStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            categoryStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            categoryStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+
         categoryStackView.addArrangedSubview(gifButton)
         categoryStackView.addArrangedSubview(stickerButton)
         categoryStackView.addArrangedSubview(textButton)
-
-        gifButton.addTarget(self, action: #selector(buttonTap(sender:)), for: .touchUpInside)
-        stickerButton.addTarget(self, action: #selector(buttonTap(sender:)), for: .touchUpInside)
-        textButton.addTarget(self, action: #selector(buttonTap(sender:)), for: .touchUpInside)
     }
 
-    override func layout() {
-
-        categoryStackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        categoryStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        categoryStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        categoryStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-    }
-
-    private func statusConfig() {
+    private func configureStatus() {
         switch status {
         case .gif:
             gifButton.backgroundColor = .systemPurple
@@ -107,6 +101,10 @@ final class CategoryButtonView: BaseView {
             stickerButton.backgroundColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1)
             gifButton.backgroundColor = UIColor(red: 59/255, green: 59/255, blue: 59/255, alpha: 1)
         }
+
+        gifButton.addTarget(self, action: #selector(buttonTap(sender:)), for: .touchUpInside)
+        stickerButton.addTarget(self, action: #selector(buttonTap(sender:)), for: .touchUpInside)
+        textButton.addTarget(self, action: #selector(buttonTap(sender:)), for: .touchUpInside)
     }
 
     @objc private func buttonTap(sender: UIButton) {
