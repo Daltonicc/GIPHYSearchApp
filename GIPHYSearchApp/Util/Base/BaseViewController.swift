@@ -19,14 +19,12 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        configureNavigationItem()
 
         backBarButton.target = self
         backBarButton.action = #selector(backButtonClicked)
     }
 
     func configureView() {}
-    func configureNavigationItem() {}
 
     @objc func backButtonClicked() {
         navigationController?.popViewController(animated: true)
