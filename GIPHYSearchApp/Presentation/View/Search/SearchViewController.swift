@@ -23,27 +23,37 @@ class SearchViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
+        viewModel?.outputDelegate = self
     }
 
     override func configureView() {
+        configureNavigationItem()
+        configureCollectionView()
+        configureTextFieldView()
+        configureCategoryView()
+        configureDatasource()
+    }
+
+    private func configureNavigationItem() {
+        navigationItem.title = "Search"
+        navigationController?.navigationBar.titleTextAttributes = [.font: UIFont.boldSystemFont(ofSize: 21),
+                                                                   .foregroundColor: UIColor.white]
+    }
+
+    private func configureCollectionView() {
         mainView.searchCollectionView.delegate = self
         mainView.searchCollectionView.dataSource = datasource
         mainView.searchCollectionView.keyboardDismissMode = .onDrag
         mainView.searchCollectionView.register(ContentCollectionViewCell.self, forCellWithReuseIdentifier: ContentCollectionViewCell.identifier)
-
-        mainView.textFieldView.textField.delegate = self
-        mainView.textFieldView.searchButton.addTarget(self, action: #selector(searchButtonClicked), for: .touchUpInside)
-
-        mainView.categoryView.delegate = self
-        viewModel?.outputDelegate = self
-
-        configureDatasource()
     }
 
-    override func configureNavigationItem() {
-        navigationItem.title = "Search"
-        navigationController?.navigationBar.titleTextAttributes = [.font: UIFont.boldSystemFont(ofSize: 21),
-                                                                   .foregroundColor: UIColor.white]
+    private func configureTextFieldView() {
+        mainView.textFieldView.textField.delegate = self
+        mainView.textFieldView.searchButton.addTarget(self, action: #selector(searchButtonClicked), for: .touchUpInside)
+    }
+
+    private func configureCategoryView() {
+        mainView.categoryView.delegate = self
     }
 
     private func configureDatasource() {

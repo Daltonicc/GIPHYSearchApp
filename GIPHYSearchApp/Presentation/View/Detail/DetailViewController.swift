@@ -22,8 +22,8 @@ final class DetailViewController: BaseViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        contentViewConfigBySearch()
-        contentViewConfigByFavorite()
+        configureContentViewBySearch()
+        configureContentViewByFavorite()
     }
 
     override func loadView() {
@@ -36,14 +36,19 @@ final class DetailViewController: BaseViewController {
     }
 
     override func configureView() {
-        mainView.favoriteButton.addTarget(self, action: #selector(favoriteButtonClicked), for: .touchUpInside)
+        configureNavigationItem()
+        configureFavoriteButton()
     }
 
-    override func configureNavigationItem() {
+    private func configureNavigationItem() {
         navigationItem.leftBarButtonItem = backBarButton
     }
 
-    private func contentViewConfig(avatar: String, gif: String, name: String, height: String, isFavorite: Bool) {
+    private func configureFavoriteButton() {
+        mainView.favoriteButton.addTarget(self, action: #selector(favoriteButtonClicked), for: .touchUpInside)
+    }
+
+    private func configureContentView(avatar: String, gif: String, name: String, height: String, isFavorite: Bool) {
         let height: Int32 = Int32(height) ?? 0
 
         mainView.contentView.indicatorAction(bool: true)
@@ -59,11 +64,11 @@ final class DetailViewController: BaseViewController {
     }
 
     // 검색 목록에서 디테일뷰로 갔을 때
-    private func contentViewConfigBySearch() {
+    private func configureContentViewBySearch() {
         guard let item = item else { return }
         guard let viewModel = viewModel else { return }
         isFavorite = viewModel.isFavoriteGIFsEmpty(item: item)
-        contentViewConfig(avatar: item.user.avatarURL,
+        configureContentView(avatar: item.user.avatarURL,
                           gif: item.images.original.url,
                           name: item.user.name,
                           height: item.images.original.height,
@@ -71,10 +76,10 @@ final class DetailViewController: BaseViewController {
     }
 
     // 즐겨찾기 목록에서 디테일뷰로 갔을 때
-    private func contentViewConfigByFavorite() {
+    private func configureContentViewByFavorite() {
         guard let favoriteItem = favoriteItem else { return }
         isFavorite = true
-        contentViewConfig(avatar: favoriteItem.avatarURL ?? "",
+        configureContentView(avatar: favoriteItem.avatarURL ?? "",
                           gif: favoriteItem.originalURL ?? "",
                           name: favoriteItem.username ?? "",
                           height: favoriteItem.originalHeight ?? "",
